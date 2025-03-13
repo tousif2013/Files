@@ -1,0 +1,59 @@
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.Session;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class SSHDatabaseConnector {
+    private static Session session;
+    private static Connection connection;
+
+    public static void connectToDatabaseViaSSH(
+            String sshHost, int sshPort, String sshUser, String sshKeyPath,
+            String dbHost, int dbPort, String dbUser, String dbPassword, String dbName) {
+        try {
+            // Establish SSH tunnel
+            JSch jsch = new JSch();
+            jsch.addIdentity(sshKeyPath); // Use SSH Key for authentication
+            session = jsch.getSession(sshUser, sshHost, sshPort);
+            session.setConfig("StrictHostKeyChecking", "no");
+            session.connect();
+
+            // Create SSH tunnel
+            int localPort = 3306; // Local port to forward to remote DB
+            session.setPortForwardingL(localPort, dbHost, dbPort);
+
+            // Establish database connection via tunnel
+            String jdbcUrl = "jdbc:mysql://localhost:" + localPort + "/" + dbName + "?useSSL=false";
+            connection = DriverManager.getConnection(jdbcUrl, dbUser, dbPassword);
+
+            System.out.println("Connected to DB successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void closeConnections() {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+            if (session != null) {
+                session.disconnect();
+            }
+            System.out.println("Connections closed.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        connectToDatabaseViaSSH(
+                "your-ssh-server.com", 22, "sshUser", "/path/to/privateKey",
+                "db-host.com", 3306, "dbUser", "dbPassword", "dbName");
+
+        // Perform DB operations here...
+
+        closeConnections();
+    }
+}
