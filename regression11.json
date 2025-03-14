@@ -1,0 +1,3692 @@
+{
+	"info": {
+		"_postman_id": "f468113a-7152-44cb-878b-1081a4cd8a02",
+		"name": "regression11",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26651233"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "Creating new buyer",
+					"item": [
+						{
+							"name": "/api/addBuyerRequest",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"function generateRandomString(length) {\r",
+											"    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+											"    var result = '';\r",
+											"    var charactersLength = characters.length; \r",
+											"    for (var i = 0; i < length; i++) {\r",
+											"        result += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+											"    }\r",
+											"    return result;\r",
+											"}\r",
+											"function generateCapitalString(length) {\r",
+											"    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+											"    var capitalletter = '';\r",
+											"    var charactersLength = characters.length; \r",
+											"    for (var i = 0; i < length; i++) {\r",
+											"        capitalletter += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+											"    }\r",
+											"    return capitalletter;\r",
+											"}\r",
+											"\r",
+											"function generateRandomno(length) {\r",
+											"    var characters = '0123456789';\r",
+											"    var nos = '';\r",
+											"    var charactersLength = characters.length; \r",
+											"    for (var i = 0; i < length; i++) {\r",
+											"        nos += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+											"    }\r",
+											"    return nos;\r",
+											"}\r",
+											"\r",
+											"\r",
+											"var num = 1;\r",
+											"\r",
+											"\r",
+											"    var email = generateRandomString(5);\r",
+											"    var useremail = email + \"@yopmail.com\";\r",
+											"    console.log(useremail);\r",
+											"     pm.environment.set('buyeruseremailid', useremail); \r",
+											"\r",
+											"    \r",
+											"    var togenerateusername = generateRandomString(6);\r",
+											"    var username = togenerateusername + (1+num++);\r",
+											"    console.log(username);\r",
+											"     pm.environment.set('buyerusername', username); \r",
+											"\r",
+											"     \r",
+											"    var buyercode = generateRandomString(7) + (2+num++);\r",
+											"    console.log(buyercode);\r",
+											"     pm.environment.set('newbuyercode', buyercode); \r",
+											"\r",
+											"    \r",
+											"    var newbuyername = generateRandomString(7) + (3+num++);\r",
+											"    console.log(newbuyername);\r",
+											"    pm.environment.set('NEWbuyername', newbuyername); \r",
+											"\r",
+											"var PAN=generateCapitalString(5)+generateRandomno(4)+'R';\r",
+											"\r",
+											"console.log(PAN);\r",
+											"pm.environment.set('Buyerpan',PAN);\r",
+											"pm.environment.set('buyergstin',22+PAN+'1ZE');\r",
+											"console.log(pm.environment.get('buyergstin'));\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Buyer Request Sent Successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Buyer Request Sent Successfully\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json, text/javascript, */*; q=0.01"
+									},
+									{
+										"key": "accept-language",
+										"value": "en-US,en;q=0.9"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"buyerId\":\"\",\"addressLine1\":\"SECTOR 12\",\"addressLine2\":\"SECTOR 14\",\"cinNo\":\"L17110MH1973PLC019482\",\"city\":\"Oka\",\"imageUrl\":\"\",\"country\":\"Ascension Island\",\"companyEmail\":\"REZ@yopmail.com\",\"panNo\":\"{{Buyerpan}}\",\"phone\":\"1234567891\",\"pincode\":\"201301\",\"state\":\"qwe\",\"companyName\":\"{{NEWbuyername}}\",\"gstinNo\":\"{{buyergstin}}\",\"buyerRating\":\"1\",\"industryType\":\"2\",\"corpArbitrageRate\":\"90\",\"appVersion\":\"DDRX\",\"bank_name\":\"SBI\",\"bank_account\":\"1234567\",\"bank_ifsc\":\"SBIN0005943\",\"relationshipManager\":\"TOUSIF\",\"minCreditPeriod\":\"90\",\"maxCreditPeriod\":\"190\",\"buyerCode\":\"{{newbuyercode}}\",\"kycRequired\":false,\"screenProgress\":\"NOT REQUIRED\",\"initialSetupWizard\":\"NOT REQUIRED\",\"accountLabel\":\"\",\"district\":\"13\",\"coverageGroup\":\"99\",\"smeCenterHeadMailId\":\"TOU@YOPMAIL.COM\",\"fax\":\"12\",\"constitution\":\"INDI\",\"leiNo\":\"529900T8BM49AURSDO55\",\"dateOfIncorporation\":\"11-Jul-2024\",\"smeCenter\":\"132\",\"externalCorpId\":\"\",\"tncAppliedFor\":\"NONE\",\"tncVerificationVia\":\"DIGITAL\",\"isBuyerEdit\":true,\"userDetails\":[{\"roleIds\":[24],\"userLevel\":\"ADMIN\",\"emailId\":\"{{buyeruseremailid}}\",\"firstName\":\"SAD\",\"lastName\":\"SDASD\",\"userName\":\"{{buyerusername}}\",\"phoneNumber\":\"9876543210\",\"externalUserId\":\"\",\"id\":0,\"roles\":[{\"roleId\":\"24\",\"roleDescription\":\"Buyer API\"}]}]}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/addBuyerRequest",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"addBuyerRequest"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/addBuyerRequest",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json, text/javascript, */*; q=0.01"
+											},
+											{
+												"key": "accept-language",
+												"value": "en-US,en;q=0.9"
+											},
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "X-Uuid",
+												"value": "{{auth}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"buyerId\":\"\",\"addressLine1\":\"SECTOR 12\",\"addressLine2\":\"SECTOR 14\",\"cinNo\":\"L17110MH1973PLC019482\",\"city\":\"Oka\",\"imageUrl\":\"\",\"country\":\"Ascension Island\",\"companyEmail\":\"REZ@yopmail.com\",\"panNo\":\"{{Buyerpan}}\",\"phone\":\"1234567891\",\"pincode\":\"201301\",\"state\":\"qwe\",\"companyName\":\"{{NEWbuyername}}\",\"gstinNo\":\"{{buyergstin}}\",\"buyerRating\":\"1\",\"industryType\":\"2\",\"corpArbitrageRate\":\"90\",\"appVersion\":\"DDRX\",\"bank_name\":\"SBI\",\"bank_account\":\"1234567\",\"bank_ifsc\":\"SBIN0005943\",\"relationshipManager\":\"TOUSIF\",\"minCreditPeriod\":\"90\",\"maxCreditPeriod\":\"190\",\"buyerCode\":\"{{newbuyercode}}\",\"kycRequired\":false,\"screenProgress\":\"NOT REQUIRED\",\"initialSetupWizard\":\"NOT REQUIRED\",\"accountLabel\":\"\",\"district\":\"13\",\"coverageGroup\":\"99\",\"smeCenterHeadMailId\":\"TOU@YOPMAIL.COM\",\"fax\":\"12\",\"constitution\":\"INDI\",\"leiNo\":\"529900T8BM49AURSDO55\",\"dateOfIncorporation\":\"11-Jul-2024\",\"smeCenter\":\"132\",\"externalCorpId\":\"\",\"tncAppliedFor\":\"NONE\",\"tncVerificationVia\":\"DIGITAL\",\"isBuyerEdit\":true,\"userDetails\":[{\"roleIds\":[24],\"userLevel\":\"ADMIN\",\"emailId\":\"{{buyeruseremailid}}\",\"firstName\":\"SAD\",\"lastName\":\"SDASD\",\"userName\":\"{{buyeruseremailid}}\",\"phoneNumber\":\"9876543210\",\"externalUserId\":\"\",\"id\":0,\"roles\":[{\"roleId\":\"24\",\"roleDescription\":\"Buyer API\"}]}]}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseurl}}api/addBuyerRequest",
+											"host": [
+												"{{baseurl}}api"
+											],
+											"path": [
+												"addBuyerRequest"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 26 Jul 2024 07:55:03 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "https://ddrx-automation.credable.in"
+										},
+										{
+											"key": "Access-Control-Allow-Methods",
+											"value": "GET, POST, OPTIONS"
+										},
+										{
+											"key": "Access-Control-Max-Age",
+											"value": "3600"
+										},
+										{
+											"key": "Access-Control-Allow-Headers",
+											"value": "Content-Type, Accept, X-Requested-With, remember-me,X-Uuid,Authorization,responseType,observ, a, b, c, v, j, k"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Content-Disposition, a, b, c, v, j, k, X-Captcha"
+										},
+										{
+											"key": "Expires",
+											"value": "Wed, 31 Dec 1969 23:59:59 GMT"
+										},
+										{
+											"key": "X-Forwarded-Proto",
+											"value": "https"
+										},
+										{
+											"key": "X-Forwarded-For",
+											"value": "127.0.0.0"
+										},
+										{
+											"key": "X-Forwarded-Port",
+											"value": "443"
+										},
+										{
+											"key": "X-FRAME-OPTIONS",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block;"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "strict-transport-security",
+											"value": "max-age=15552000; includeSubDomains; preload"
+										},
+										{
+											"key": "Content-Security-Policy",
+											"value": "default-src * data: blob:;object-src blob:; script-src 127.0.0.1:* *.digio.in localhost:* 'self' *.google-analytics.com *.gstatic.com *.google.com *.googletagmanager.com *.in-freshbots.ai *.pusher.com nr.tn *.nr-data.net *.credable.in *.norton.com *.newrelic.com 52.220.82.99 'unsafe-inline' 'unsafe-eval';style-src data: blob: 'unsafe-inline' *;connect-src localhost:* 127.0.0.1:* 'unsafe-inline'  *.credable.in *.digio.in *.in-freshbots.ai *.pusher.com *.google-analytics.com 52.220.82.99 *.googletagmanager.com *.gstatic.com;"
+										},
+										{
+											"key": "X-Content-Security-Policy",
+											"value": "default-src * data: blob:;object-src blob:; script-src 127.0.0.1:* *.digio.in localhost:* 'self' *.google-analytics.com *.gstatic.com *.google.com *.googletagmanager.com *.in-freshbots.ai *.pusher.com nr.tn *.nr-data.net *.credable.in *.norton.com *.newrelic.com 52.220.82.99 'unsafe-inline' 'unsafe-eval';style-src data: blob: 'unsafe-inline' *;connect-src localhost:* 127.0.0.1:* 'unsafe-inline'  *.credable.in *.digio.in *.in-freshbots.ai *.pusher.com *.google-analytics.com 52.220.82.99 *.googletagmanager.com *.gstatic.com;"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "origin"
+										},
+										{
+											"key": "Permissions-Policy",
+											"value": "fullscreen=(self), sync-xhr=(self), clipboard-read=(self), clipboard-write=(self)"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, must-revalidate;"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"OK\",\n    \"description\": \"Buyer Request Sent Successfully\",\n    \"body\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/v2/getAllBuyerListMakerAndChecker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.environment.set('buyerStgId',pm.response.json().data.content[0].buyerStgId);\r",
+											"\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"// Parse response JSON\r",
+											"let jsonData = pm.response.json();\r",
+											"\r",
+											" \r",
+											"\r",
+											"pm.test(\"Description is null\", function () {\r",
+											"    pm.expect(jsonData.description).to.be.null;\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Body is null\", function () {\r",
+											"    pm.expect(jsonData.body).to.be.null;\r",
+											"});\r",
+											"\r",
+											"// Validate pagination data\r",
+											"pm.test(\"Pagination data is correct\", function () {\r",
+											"    pm.expect(jsonData.data.number).to.eql(0);\r",
+											"    pm.expect(jsonData.data.size).to.eql(9);\r",
+											"    pm.expect(jsonData.data.totalPages).to.eql(1);\r",
+											"    pm.expect(jsonData.data.numberOfElements).to.eql(1);\r",
+											"    pm.expect(jsonData.data.totalElements).to.eql(1);\r",
+											"    pm.expect(jsonData.data.previousPage).to.be.false;\r",
+											"    pm.expect(jsonData.data.first).to.be.true;\r",
+											"    pm.expect(jsonData.data.nextPage).to.be.false;\r",
+											"    pm.expect(jsonData.data.last).to.be.true;\r",
+											"});\r",
+											"var companname=pm.environment.get('NEWbuyername');\r",
+											"var buyerpan=pm.environment.get('Buyerpan');\r",
+											"var buyerGSTIN=pm.environment.get('buyergstin');\r",
+											"var buyerCODE=pm.environment.get('newbuyercode');\r",
+											"var Buyeremailid=pm.environment.get('buyeruseremailid');\r",
+											"var buyeruserName=pm.environment.get('buyerusername');\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"let buyerUserName = buyeruserName;\r",
+											"let buyernam=companname;\r",
+											"\r",
+											"buyernam=buyernam.charAt(0).toUpperCase()+buyernam.slice(1);\r",
+											"// Capitalize only the first letter and keep the rest of the string as is\r",
+											"buyerUserName = buyerUserName.charAt(0).toUpperCase() + buyerUserName.slice(1);\r",
+											"\r",
+											"\r",
+											"console.log(\"Updated buyerUserName:\", buyerUserName);\r",
+											"\r",
+											"pm.test(\"buyerUserName starts with an uppercase letter\", function() {\r",
+											"    pm.expect(buyerUserName.charAt(0)).to.eql(buyerUserName.charAt(0).toUpperCase());\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Content array has expected properties\", function () {\r",
+											"    pm.expect(jsonData.data.content).to.be.an(\"array\").with.lengthOf(1);\r",
+											"    let content = jsonData.data.content[0];\r",
+											"\r",
+											"    pm.expect(content.buyerId).to.be.null;\r",
+											"    pm.expect(content.addressLine1).to.eql(\"SECTOR 12\");\r",
+											"    pm.expect(content.addressLine2).to.eql(\"SECTOR 14\");\r",
+											"    pm.expect(content.cinNo).to.eql(\"L17110MH1973PLC019482\");\r",
+											"    pm.expect(content.city).to.eql(\"Oka\");\r",
+											"    pm.expect(content.contactPersonName).to.eql(\"SAD SDASD\");\r",
+											"    pm.expect(content.country).to.eql(\"Ascension Island\");\r",
+											"    pm.expect(content.companyEmail).to.eql(\"REZ@yopmail.com\");\r",
+											"    pm.expect(content.panNo).to.eql(buyerpan);\r",
+											"    pm.expect(content.phone).to.eql(\"1234567891\");\r",
+											"    pm.expect(content.pincode).to.eql(201301);\r",
+											"    pm.expect(content.state).to.eql(\"Qwe\");\r",
+											"    pm.expect(content.status).to.eql(\"ACT\");\r",
+											"    pm.expect(content.companyName).to.eql(buyernam);\r",
+											"    pm.expect(content.gstinNo).to.eql(buyerGSTIN);\r",
+											"    pm.expect(content.imageUrl).to.be.null;\r",
+											"    pm.expect(content.userId).to.be.null;\r",
+											"    pm.expect(content.userType).to.be.null;\r",
+											"    pm.expect(content.userStatus).to.be.null;\r",
+											"    pm.expect(content.corpArbitrageRate).to.eql(90.0);\r",
+											"    \r",
+											"    // Validate nested properties within content\r",
+											"    pm.expect(content.buyerRating[\"1\"]).to.eql(\"AAA\");\r",
+											"    pm.expect(content.industryType[\"2\"]).to.eql(\"FINANCE Industry\");\r",
+											"\r",
+											"    // Check userDetailsDTOs array properties\r",
+											"    pm.expect(content.userDetailsDTOs).to.be.an(\"array\").with.lengthOf(1);\r",
+											"    let userDetails = content.userDetailsDTOs[0];\r",
+											"    \r",
+											"    \r",
+											"    pm.expect(userDetails.userName).to.eql(buyeruserName);\r",
+											"    pm.expect(userDetails.status).to.eql(\"PDG\");\r",
+											"    pm.expect(userDetails.firstName).to.eql(\"SAD\");\r",
+											"    pm.expect(userDetails.lastName).to.eql(\"SDASD\");\r",
+											"    pm.expect(userDetails.userLevel).to.eql(\"ADMIN\");\r",
+											"    \r",
+											"    // Validate roles within userDetailsDTOs\r",
+											"    pm.expect(userDetails.roles).to.be.an(\"array\").with.lengthOf(1);\r",
+											"    let role = userDetails.roles[0];\r",
+											"    pm.expect(role.roleId).to.eql(24);\r",
+											"    pm.expect(role.role).to.eql(\"BUYAPI\");\r",
+											"    pm.expect(role.roleDescription).to.eql(\"Buyer API\");\r",
+											"    \r",
+											"    // Validate additional properties\r",
+											"    pm.expect(content.appVersion.DDRX).to.eql(\"DDRX\");\r",
+											"    pm.expect(content.bank_name).to.eql(\"SBI\");\r",
+											"    pm.expect(content.bank_account).to.eql(\"1234567\");\r",
+											"    pm.expect(content.bank_ifsc).to.eql(\"SBIN0005943\");\r",
+											"    pm.expect(content.credableFeeRate).to.eql(10.0);\r",
+											"    pm.expect(content.otpRequired).to.be.true;\r",
+											"    pm.expect(content.isAddFundOtpRequired).to.be.true;\r",
+											"    pm.expect(content.isLoginOtpRequired).to.be.true;\r",
+											"    pm.expect(content.isAprvMrktOtpRequired).to.be.true;\r",
+											"    pm.expect(content.relationshipManager).to.eql(\"TOUSIF\");\r",
+											"});\r",
+											"\r",
+											"// Validate email template IDs\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{checkerauth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{checkerauth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"searchBuyerName\":\"{{NEWbuyername}}\",\"page\":0,\"size\":10}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/v2/getAllBuyerListMakerAndChecker",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"v2",
+										"getAllBuyerListMakerAndChecker"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/v2/getAllBuyerListMakerAndChecker",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-Uuid",
+												"value": "{{checkerauth}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"searchBuyerName\":\"{{NEWbuyername}}\",\"page\":0,\"size\":10}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseurl}}api/v2/getAllBuyerListMakerAndChecker",
+											"host": [
+												"{{baseurl}}api"
+											],
+											"path": [
+												"v2",
+												"getAllBuyerListMakerAndChecker"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx"
+										},
+										{
+											"key": "Date",
+											"value": "Wed, 06 Nov 2024 08:22:29 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "https://ddrx-automation.credable.in"
+										},
+										{
+											"key": "Access-Control-Allow-Methods",
+											"value": "GET, POST, OPTIONS"
+										},
+										{
+											"key": "Access-Control-Max-Age",
+											"value": "3600"
+										},
+										{
+											"key": "Access-Control-Allow-Headers",
+											"value": "Content-Type, Accept, X-Requested-With, remember-me,X-Uuid,Authorization,responseType,observ, a, b, c, v, j, k"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Content-Disposition, a, b, c, v, j, k, X-Captcha"
+										},
+										{
+											"key": "Expires",
+											"value": "Wed, 31 Dec 1969 23:59:59 GMT"
+										},
+										{
+											"key": "X-Forwarded-Proto",
+											"value": "https"
+										},
+										{
+											"key": "X-Forwarded-For",
+											"value": "127.0.0.0"
+										},
+										{
+											"key": "X-Forwarded-Port",
+											"value": "443"
+										},
+										{
+											"key": "X-FRAME-OPTIONS",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block;"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "strict-transport-security",
+											"value": "max-age=15552000; includeSubDomains; preload"
+										},
+										{
+											"key": "Content-Security-Policy",
+											"value": "default-src * data: blob:;object-src blob:; script-src 127.0.0.1:* *.digio.in localhost:* 'self' *.google-analytics.com *.gstatic.com *.google.com *.googletagmanager.com *.in-freshbots.ai *.pusher.com nr.tn *.nr-data.net *.credable.in *.norton.com *.newrelic.com 52.220.82.99 'unsafe-inline' 'unsafe-eval';style-src data: blob: 'unsafe-inline' *;connect-src localhost:* 127.0.0.1:* 'unsafe-inline'  *.credable.in *.digio.in *.in-freshbots.ai *.pusher.com *.google-analytics.com 52.220.82.99 *.googletagmanager.com *.gstatic.com;"
+										},
+										{
+											"key": "X-Content-Security-Policy",
+											"value": "default-src * data: blob:;object-src blob:; script-src 127.0.0.1:* *.digio.in localhost:* 'self' *.google-analytics.com *.gstatic.com *.google.com *.googletagmanager.com *.in-freshbots.ai *.pusher.com nr.tn *.nr-data.net *.credable.in *.norton.com *.newrelic.com 52.220.82.99 'unsafe-inline' 'unsafe-eval';style-src data: blob: 'unsafe-inline' *;connect-src localhost:* 127.0.0.1:* 'unsafe-inline'  *.credable.in *.digio.in *.in-freshbots.ai *.pusher.com *.google-analytics.com 52.220.82.99 *.googletagmanager.com *.gstatic.com;"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "origin"
+										},
+										{
+											"key": "Permissions-Policy",
+											"value": "fullscreen=(self), sync-xhr=(self), clipboard-read=(self), clipboard-write=(self)"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, must-revalidate;"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"OK\",\n    \"description\": null,\n    \"body\": null,\n    \"data\": {\n        \"number\": 0,\n        \"size\": 9,\n        \"totalPages\": 1,\n        \"numberOfElements\": 1,\n        \"totalElements\": 1,\n        \"previousPage\": false,\n        \"first\": true,\n        \"nextPage\": false,\n        \"last\": true,\n        \"content\": [\n            {\n                \"buyerId\": null,\n                \"addressLine1\": \"SECTOR 12\",\n                \"addressLine2\": \"SECTOR 14\",\n                \"cinNo\": \"L17110MH1973PLC019482\",\n                \"city\": \"Oka\",\n                \"contactPersonName\": \"SAD SDASD\",\n                \"country\": \"Ascension Island\",\n                \"companyEmail\": \"REZ@yopmail.com\",\n                \"panNo\": \"PDCRO0710R\",\n                \"phone\": \"1234567891\",\n                \"pincode\": 201301,\n                \"state\": \"Qwe\",\n                \"status\": \"ACT\",\n                \"companyName\": \"TeHE3zf6\",\n                \"gstinNo\": \"22PDCRO0710R1ZE\",\n                \"imageUrl\": null,\n                \"userId\": null,\n                \"userType\": null,\n                \"userStatus\": null,\n                \"corpArbitrageRate\": 90,\n                \"buyerRating\": {\n                    \"1\": \"AAA\"\n                },\n                \"industryType\": {\n                    \"2\": \"FINANCE Industry\"\n                },\n                \"userDetailsDTOs\": [\n                    {\n                        \"userId\": 880,\n                        \"userName\": \"HSle372\",\n                        \"password\": null,\n                        \"userType\": null,\n                        \"isUserValidated\": null,\n                        \"uuid\": null,\n                        \"permissions\": null,\n                        \"lastAccessTime\": null,\n                        \"status\": \"PDG\",\n                        \"buyerSignupProgress\": null,\n                        \"supplierSignupProgress\": null,\n                        \"loggedInUserType\": null,\n                        \"firstName\": \"SAD\",\n                        \"lastName\": \"SDASD\",\n                        \"buyerImageUrl\": null,\n                        \"supplierImageUrl\": null,\n                        \"buyerCompanyName\": null,\n                        \"supplierCompanyName\": null,\n                        \"ipAddress\": null,\n                        \"userLevel\": \"ADMIN\",\n                        \"roles\": [\n                            {\n                                \"roleId\": 24,\n                                \"role\": \"BUYAPI\",\n                                \"roleDescription\": \"Buyer API\"\n                            }\n                        ],\n                        \"phoneNumber\": \"9876543210\",\n                        \"emailId\": \"cFB5c@yopmail.com\",\n                        \"externalUserId\": \"HSle372\",\n                        \"userStatus\": \"ADD\",\n                        \"userHighlightedField\": [],\n                        \"tncUrl\": null\n                    }\n                ],\n                \"appVersion\": {\n                    \"DDRX\": \"DDRX\"\n                },\n                \"bank_name\": \"SBI\",\n                \"bank_account\": \"1234567\",\n                \"bank_ifsc\": \"SBIN0005943\",\n                \"credableFeeRate\": 10,\n                \"weekOffs\": null,\n                \"marketCloseDuration\": null,\n                \"otpRequired\": true,\n                \"autoApproval\": null,\n                \"buyerHurdleRate\": null,\n                \"integrationType\": null,\n                \"minCreditPeriod\": 90,\n                \"maxCreditPeriod\": 190,\n                \"buyerCode\": \"9yHAe154\",\n                \"isHurdleRateEditable\": null,\n                \"marketApproveDuration\": null,\n                \"autoProcessStartDuration\": null,\n                \"pmtMode\": null,\n                \"signupInvitePreInvoice\": null,\n                \"dpoEnabled\": null,\n                \"isMonetagoRequestActive\": null,\n                \"emailCCReceivers\": null,\n                \"invoiceFinancingRatio\": null,\n                \"noOfExcludedDays\": null,\n                \"fundingType\": null,\n                \"hurdleRateType\": null,\n                \"hurdleRateBankMap\": null,\n                \"hurdleRateBankId\": null,\n                \"defaultAdaptor\": null,\n                \"vendorDisbursementType\": null,\n                \"tranche1Prct\": null,\n                \"tranche1AccelarationDays\": null,\n                \"inboundFileAdapter\": null,\n                \"outboundFileAdapter\": null,\n                \"treasuryFundAmount\": null,\n                \"rateRenewalType\": null,\n                \"slaSignVia\": \"ESIGN\",\n                \"outputFilesAuditType\": null,\n                \"holiDayYears\": null,\n                \"autoProcessTrigger\": null,\n                \"kycRequired\": false,\n                \"screenProgress\": \"DONE\",\n                \"marketApproveDurationMinutes\": null,\n                \"marketCloseDurationMinutes\": null,\n                \"autoProcessStartDurationMinutes\": null,\n                \"paymentBankId\": null,\n                \"paymentBankName\": null,\n                \"isAddFundOtpRequired\": true,\n                \"isLoginOtpRequired\": true,\n                \"isAprvMrktOtpRequired\": true,\n                \"ftpId\": null,\n                \"ftpUrl\": null,\n                \"ftpPass\": null,\n                \"ftpDirectory\": null,\n                \"delayedPmtPenaltyRate\": null,\n                \"pmtAmtType\": null,\n                \"dataSeparator\": null,\n                \"dataSeparatorGeneration\": null,\n                \"paymentAdviceFlag\": null,\n                \"dpoType\": null,\n                \"sendRejectFeed\": null,\n                \"riskUsersEmail\": null,\n                \"emailAttachmetPasscode\": null,\n                \"sendInvUpdCsv\": null,\n                \"postApvPmtReminderReceivers\": null,\n                \"generateCredableFeeInvoice\": \"NA\",\n                \"invoiceAlertInternalMailReceivers\": null,\n                \"weeklyReportGenaration\": null,\n                \"adjustInvDueDate\": null,\n                \"bankRevFeedInternalMailReceivers\": null,\n                \"enablePayableAlertOnMail\": null,\n                \"vendorCreditUtilisationType\": null,\n                \"alertEmailPostInstrFileTransfer\": null,\n                \"enableScrPcrFunding\": null,\n                \"accountLabel\": null,\n                \"district\": \"13\",\n                \"coverageGroup\": \"99\",\n                \"smeCenterHeadMailId\": \"TOU@YOPMAIL.COM\",\n                \"fax\": \"12\",\n                \"constitution\": \"INDI\",\n                \"leiNo\": \"529900T8BM49AURSDO55\",\n                \"dateOfIncorporation\": \"11-Jul-2024\",\n                \"smeCenter\": \"132\",\n                \"paymentAdviceType\": \"EMAIL\",\n                \"accountType\": null,\n                \"vendorAutoMapped\": null,\n                \"paymtDateAdjsmtCalendar\": null,\n                \"externalCorpId\": \"\",\n                \"creditLimitProcessType\": \"ON_HOLD\",\n                \"isBatchProcess\": false,\n                \"batchProcessEndTime\": null,\n                \"batchProcessEndMinutes\": null,\n                \"batchProcessApprovalDuration\": null,\n                \"ewayBillCheck\": null,\n                \"duplicateInvoiceAfterFinancialYear\": null,\n                \"duplicateInvoiceWithInvoiceIdAfterFinancialYear\": null,\n                \"rejectInvoicePostBankMaxSlab\": null,\n                \"staleInvoice\": null,\n                \"staleInvoicePeriod\": null,\n                \"accountOverdue\": null,\n                \"whatsAppNoticationType\": false,\n                \"vendorFinancingProgram\": null,\n                \"invoiceDueDateTenor\": null,\n                \"buyerDetailsRequest\": [],\n                \"requestType\": [\n                    \"ADD\"\n                ],\n                \"buyerStgId\": 3470,\n                \"buyerConfigStgId\": null,\n                \"invoiceUploadByVendor\": false,\n                \"invoiceSoftCopyMandatory\": false,\n                \"billableDisbursementStartTime\": null,\n                \"billableDisbursementStartMinutes\": null,\n                \"tncAppliedFor\": \"NONE\",\n                \"tncVerificationVia\": \"DIGITAL\",\n                \"vendorStatusFile\": \"NO\",\n                \"invMultiLevelApproval\": \"NO\",\n                \"generateDebitNote\": \"NO\",\n                \"customPaymentDate\": \"SYSTEM_GEN\",\n                \"inactiveEmailTempateIds\": null,\n                \"canUpdateTreasuryFund\": \"NO\",\n                \"bankAllocationBy\": \"ALLOCATION_PERCENT\",\n                \"approveVendorUploadInvoice\": null,\n                \"supplierStatus\": [],\n                \"annualRateBidding\": false,\n                \"invoiceUploadAfterVendorActive\": false,\n                \"vendorLevelAdjustmentLogic\": \"DURING_INVOICE_UPLOAD\",\n                \"sendReverseFeedAfterBankPaymentAck\": false,\n                \"sendPaymentInstrOnHaircutMap\": null,\n                \"sendPaymentInstrOnHaircut\": \"No\",\n                \"invoiceUploadMechanism\": \"Only Incremental\",\n                \"autoEnableReprocessing\": false,\n                \"paymentDateManualVendor\": \"ALL_DATES\",\n                \"maxCreditPeriodMsme\": \"null\",\n                \"relationshipManager\": \"TOUSIF\"\n            }\n        ]\n    },\n    \"emailTemlateIds\": {\n        \"SUPP_INV_UPLD_NOTIF\": \"Supp inv upld notif (SUPPLIER)\",\n        \"REPORTING_ON_MAIL\": \"Reporting on mail (BUYER)\",\n        \"POST_APPROVAL_PMT_FILE\": \"Post approval pmt file (BUYER)\",\n        \"BANK_DUE_PAYEMNT_REMINDER\": \"Bank due payemnt reminder (BUYER)\",\n        \"ONHOLD_INV_NOTIF\": \"Onhold inv notif (BUYER)\",\n        \"EXPIRY_OF_BANK_BUYER_CONFIG_RATE\": \"Expiry of bank buyer config rate (BUYER)\",\n        \"VENDOR_CREDIT_CHANGED_LIMIT\": \"Vendor credit changed limit (SUPPLIER)\",\n        \"POST_APPROVAL_PMT_FILE_ATTACHMENT\": \"Post approval pmt file attachment (BUYER)\",\n        \"SUBMIT_BID_MAILLER\": \"Submit bid mailler (SUPPLIER)\",\n        \"EXPIRED_BANK_BUYER_CONFIG_RATE\": \"Expired bank buyer config rate (BUYER)\",\n        \"SUPPLIER_PAYMENT_ADJUSTMENT_REPORT\": \"Supplier payment adjustment report (SUPPLIER)\",\n        \"WEEKLY_BUYER_INVOICE_REPORT\": \"Weekly buyer invoice report (BUYER)\",\n        \"PAYABLE_ALERT_ON_MAIL\": \"Payable alert on mail (BUYER)\",\n        \"BUYER_BANK_REV_FEED_NOT_RCD_ALERT\": \"Buyer bank rev feed not rcd alert (BUYER)\",\n        \"BANK_BUYER_LIMIT_EXHAUSTED\": \"Bank buyer limit exhausted (BUYER)\"\n    },\n    \"vendorOnboardingData\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "/api/addBuyerApproval",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Buyer Added Successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Buyer Added Successfully\");\r",
+											"});\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{checkerauth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{checkerauth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"checkerResponse\":\"APPROVE\",\"buyerStgId\":{{buyerStgId}}}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/addBuyerApproval",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"addBuyerApproval"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/addBuyerApproval",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-Uuid",
+												"value": "{{checkerauth}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"checkerResponse\":\"APPROVE\",\"buyerStgId\":{{buyerStgId}}}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://ddrx-automation.credable.in/api/addBuyerApproval",
+											"protocol": "https",
+											"host": [
+												"ddrx-automation",
+												"credable",
+												"in"
+											],
+											"path": [
+												"api",
+												"addBuyerApproval"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 26 Jul 2024 07:57:55 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "https://ddrx-automation.credable.in"
+										},
+										{
+											"key": "Access-Control-Allow-Methods",
+											"value": "GET, POST, OPTIONS"
+										},
+										{
+											"key": "Access-Control-Max-Age",
+											"value": "3600"
+										},
+										{
+											"key": "Access-Control-Allow-Headers",
+											"value": "Content-Type, Accept, X-Requested-With, remember-me,X-Uuid,Authorization,responseType,observ, a, b, c, v, j, k"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Content-Disposition, a, b, c, v, j, k, X-Captcha"
+										},
+										{
+											"key": "Expires",
+											"value": "Wed, 31 Dec 1969 23:59:59 GMT"
+										},
+										{
+											"key": "X-Forwarded-Proto",
+											"value": "https"
+										},
+										{
+											"key": "X-Forwarded-For",
+											"value": "127.0.0.0"
+										},
+										{
+											"key": "X-Forwarded-Port",
+											"value": "443"
+										},
+										{
+											"key": "X-FRAME-OPTIONS",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block;"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "strict-transport-security",
+											"value": "max-age=15552000; includeSubDomains; preload"
+										},
+										{
+											"key": "Content-Security-Policy",
+											"value": "default-src * data: blob:;object-src blob:; script-src 127.0.0.1:* *.digio.in localhost:* 'self' *.google-analytics.com *.gstatic.com *.google.com *.googletagmanager.com *.in-freshbots.ai *.pusher.com nr.tn *.nr-data.net *.credable.in *.norton.com *.newrelic.com 52.220.82.99 'unsafe-inline' 'unsafe-eval';style-src data: blob: 'unsafe-inline' *;connect-src localhost:* 127.0.0.1:* 'unsafe-inline'  *.credable.in *.digio.in *.in-freshbots.ai *.pusher.com *.google-analytics.com 52.220.82.99 *.googletagmanager.com *.gstatic.com;"
+										},
+										{
+											"key": "X-Content-Security-Policy",
+											"value": "default-src * data: blob:;object-src blob:; script-src 127.0.0.1:* *.digio.in localhost:* 'self' *.google-analytics.com *.gstatic.com *.google.com *.googletagmanager.com *.in-freshbots.ai *.pusher.com nr.tn *.nr-data.net *.credable.in *.norton.com *.newrelic.com 52.220.82.99 'unsafe-inline' 'unsafe-eval';style-src data: blob: 'unsafe-inline' *;connect-src localhost:* 127.0.0.1:* 'unsafe-inline'  *.credable.in *.digio.in *.in-freshbots.ai *.pusher.com *.google-analytics.com 52.220.82.99 *.googletagmanager.com *.gstatic.com;"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "origin"
+										},
+										{
+											"key": "Permissions-Policy",
+											"value": "fullscreen=(self), sync-xhr=(self), clipboard-read=(self), clipboard-write=(self)"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, must-revalidate;"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"OK\",\n    \"description\": \"Buyer Added Successfully\",\n    \"body\": null\n}"
+								}
+							]
+						},
+						{
+							"name": "getAllBuyerListMakerAndChecker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();\r",
+											"var expectedCompanyName = pm.environment.get(\"NEWbuyername\");\r",
+											"var actualCompanyName = jsonData.data.content[0].companyName;\r",
+											"console.log(\"Actual Company Name: \", actualCompanyName);\r",
+											" var actName=actualCompanyName.toLowerCase();\r",
+											" var expName=expectedCompanyName.toLowerCase();\r",
+											"pm.test(\"Verify if company name is correct\", function() {\r",
+											"    pm.expect(actName).to.eql(expName);\r",
+											"});\r",
+											"\r",
+											" \r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 1000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"searchBuyerName\":\"{{NEWbuyername}}\",\"page\":0,\"size\":10}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/v2/getAllBuyerListMakerAndChecker",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"v2",
+										"getAllBuyerListMakerAndChecker"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "getAllBuyerListMakerAndChecker",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json, text/javascript, */*; q=0.01"
+											},
+											{
+												"key": "accept-language",
+												"value": "en-US,en;q=0.9"
+											},
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "cookie",
+												"value": "mle=false; mlePhrase=J2ac0uAC6ghHMfG9uOCvmV0iDuP2v8F7HCG9U83wikrqBALu5Q0heHJlAZhmBHE0; joe-chnlcustid=7cfb50ca-0540-44ce-b67f-3b1915d43693; _ga=GA1.2.1794270064.1721914439; _gid=GA1.2.94574947.1721914439; captchaSiteKey=; captchaEnabled=false; chatBotHash=46f4815551662adf9b725cc40e19e350b2a9; digioEnvironment=sandbox; X-Uuid=0d184f3e-24c5-49d2-919a-0bed928b237f; locationHistory=2024-07-25T23%3A28%3A12; IP=127.0.0.1; userId=1; userName=TEST%40bt.maker; userType=ADMIN; permission=UPDVCF%2CMISPGE%2CINVREP%2CESCLDP%2CROLADM%2CBMINRP%2CVALOTP%2CFBSCAD%2CADDPER%2CGETSCT%2CGETBRS%2CUPTMRK%2CGETBRI%2CRATRPT%2CGBMCLR%2CSINDRX%2CGETAPF%2CPERADM%2CBCNDTL%2CGTARML%2CBASUMR%2CGETSCL%2CADDVAC%2CECARPT%2CKYCRPT%2CUPTUSR%2CGETSUR%2CGETSUP%2CFORPWD%2CUSRRPT%2CBUMKCK%2CGNVACC%2CSWBANK%2CFBNRMD%2CREPMTS%2CRINVMR%2CSPRTCF%2CGETEIB%2CGETHOL%2CFRMRHD%2CSMPFCR%2CGTALPR%2CFSAOIM%2CFTCPYM%2CATHBCH%2CUPINVA%2CIFUPRE%2CTNCP%2CSRCIBB%2CINTUSR%2CBYUTRE%2CAPPORT%2CPMTAPR%2CUPBSER%2CFAXBOF%2CUAOSIC%2CGSBYB%2CFBSCCD%2CUAOSIM%2CUBSCAD%2CFALBBC%2CUSRDSB%2CFSACDT%2CGTSTIN%2CFESCLD%2CRMREPT%2CFCVSLA%2CRMUSSN%2CUPDIMG%2CUBSCCD%2CSUPUPD%2CUMRKTC%2CUPDUDT%2CFTINDX%2CDOCUPD%2CALLBUY%2CRSKCNT%2CUPHOLR%2CMRKTRP%2CFCBSLA%2CTNCAGR%2CCSDRPT%2CUPDPTD%2CTATREP%2CAVDONP%2CGETMLR%2CRMLSRT%2CATHDTL%2CADDBUY%2CFUDFLI%2CAPYPOR%2CSUPINV%2CBILWFR%2CINDADM%2CINVRJF%2CBATHDR%2CDIBSUP%2CSUPRPT%2CFVACCD%2CTERMCN%2CFTRFMC%2CSUBLMM%2CREUTNC%2CSOFDIJ%2CFTPPWH%2CPTBUSF%2CRSTPWD%2CGETEMT%2CUPDBYC%2CUPIFAM%2CUPLAOC%2CAPDRPT%2CFCHRIS%2CALLEMT%2CDWNBTN%2CTLAPRJ%2CMRKTCF%2CCMISPG%2CUPRMDT%2CBNKLST%2CVBUDFU%2CGENOTP%2CFAPFRP%2CMONDSB%2CADDSUR%2CGECPFM%2CINEXMP%2CSNDNOT%2CRLDCHE%2CFRFBBR%2CSRCHDT%2CAVAMRE%2CUPCRLM%2CSFTDRI%2CADRMPG%2CGRLUSR%2CSUPDSH%2CABSCCD%2CREPHDR%2CADBNRQ%2CROLPRT%2CEDTPER%2CUROLUS%2CCHAPAS%2CGETPUR%2CCRTPMT%2CPRTBS%2CBUYLST%2CREFREP%2CAPYRPT%2CSUPUSR%2CUSRLOG%2CAUTRPR%2CBUHOLI%2CDWMISR%2CRBIRRD%2CGETBID%2CDISPMT%2CRBIRRG%2CALBULT%2CACTUSR%2CVIWACT%2CFNDBYR%2CSBMCLR%2CSUPBUR%2CBYRWFR%2CALLFDW%2CFMKTCH%2CUBSFRD%2CSVETMP%2CFEPMTC%2CBUYADP%2CADUTRP%2CGBUPER%2CBUYADM%2CUPDSUP%2CDWNFIL%2COLAPRJ%2CADDBRC%2CUPDBCR%2CGETPER%2CCREOFR%2CSAVSLA%2CUPMCLR%2CHOLSF%2CFTCBUY%2CUBKBSC%2CADDBBP%2CUPBSLT%2CRETRYP%2CSUBFED%2CSNDOTP%2CFINVMP%2CALLCMP%2CGETDOD%2CLGDTPE%2CPRFUBY%2CDELPAY%2CVIWSUP%2CSHWBUY%2CPMTMPG%2CAPPINV%2CADDROL%2CACVRVA%2CUPTPRL%2CAPBNRQ%2CGPYBND%2CCLLRPT%2CUSRADM%2CADDIND%2CEDSUPC%2CFINBFS%2CCRBBDD%2CAREVEW%2CFUPBSL%2CLONREP%2CVASPGE%2CINVRPT%2CACPORT%2CIRFCAP%2CGETUSR%2CUPDEML%2CUPSUPD%2CBMWRP%2CPRFUBK%2CGBKACK%2CFEBYSC%2CSNDPYF%2CNODATE%2CASIRPT%2CSABSLA%2CFCHINV%2CFSUPLI%2CDSOFAD%2CUPBYSC%2CGINTUR%2CUPDCAM%2CADDBNK%2CCHEREF%2CRSKUDT%2CADDUSR%2CFBKBSC%2CAVINVR%2CADMMIS%2CSBBDRD%2CADUPS%2CGETROL%2CCHKSTS%2CBNKADM%2CGECPMU%2CRMRPTS%2CEDTIND%2CSRCSUR%2CVSONDE%2CAUTOTP%2CRRECON%2CALERTS%2CFCHBRC%2CUPFLOG%2CBULAOC%2CSAVBPD%2CEMLMNT%2CBUYMON%2CABSRB%2CADBYRQ%2CGECPMH%2CFCHSCR%2CUSPAIN%2CRVTPMT%2CSUPSF%2CAXADRP%2CADEMAI%2CUPDINV%2CFBSFRD%2CRSKALT%2CUPSACS%2CADMRPT%2CBURMCK%2CGETDDN%2CGMCLRC%2CADMINP%2CGTDATS%2CRSKRPT%2CADDRM%2CGETIND%2CFURDUE%2CGTBMRK%2CCEFSVA%2CSTINPG%2CFECHAC%2CFILBYB%2CABRBY%2CSSMGRM%2CREVFED%2CGETBAT%2CADIUSR%2CINVSFD%2CDWNDOC%2CCONRPT%2CVLLOTP%2CCRDLMT%2CEDTPMT%2CADDOFF%2CCLTMIS%2CGETFIL%2CADINUP%2CBMSURP%2CUPDCT%2CUPSCHT%2CATHHDR%2CCLMRHD%2CUPTSUP%2CUPDHOL%2CBATDTS%2CREFBNK%2CFEBLMM%2CGINVHD%2CINVDIS%2CGETRM%2CUPDSTS%2CSPARPT%2CBCNHDR%2CSUCRLM; firstName=Admin; lastName=Maker; userKycStatus=null; isKycRequired=null; supplierIdForVendorOnboard=null; signUpProgressForVendorOnboarding=null; chatBotFlag=false; applicationPlatform=DDRX; isUserLogin=1; uiCountry=null; buyerClosedMarket=1; isPasswordActive=true; campaigns=null; campaignsFlag=false; uiTranslations=%0A%7B%0A%20%20%20%20%20%20%20%20%22buyer_dashboard.totalSavings%22%20%3A%20%22Total%20Savings%22%2C%0A%20%20%20%20%20%20%20%20%22buyer_dashboard.totalDiscountOffered%22%20%3A%20%22Total%20Discount%20Offered%22%2C%0A%20%20%20%20%20%20%20%20%22invoice_fundingType.bankFunded%22%3A%20%22Bank%20Funded%22%2C%0A%20%20%20%20%20%20%20%20%22invoice_fundingType.selfFunded%22%3A%20%22Self%20Funded%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.discountAmount%22%3A%20%22Discount%20Amount%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.supplierDiscountAmount%22%3A%20%22Supplier%20Discount%20Amount%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.irrPer%22%3A%20%22IRR%20%25%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.supplierDiscountAnnualizedPer%22%3A%20%22Annualized%20Discount%20%25(Invoice%20ROI)%22%2C%0A%20%20%20%20%20%20%20%20%22invoice_filter.discount%22%3A%20%22Discount%22%2C%0A%20%20%20%20%20%20%20%20%22invoice_filter.flatSupplierDiscount%22%3A%20%22Flat%20Supplier%20Discount%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.invoiceAmount%22%3A%20%22Invoice%20Amount%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.gst%22%3A%20%22GST%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.tds%22%3A%20%22TDS%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.netAmount%22%3A%20%22Net%20Amount%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.panNo%22%3A%20%22Pan%20No.%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.gstin%22%3A%20%22GSTIN%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.ifscCode%22%3A%20%22IFSC%20Code%22%2C%0A%20%20%20%20%20%20%20%20%22buyer.supplier.ifscCode%22%3A%20%22Bank%20IFSC%22%2C%0A%20%20%20%20%20%20%20%20%22market.totalDiscountOffered%22%3A%20%22Total%20Discount%20Offered%22%2C%0A%20%20%20%20%20%20%20%20%22market.weightedAvgArbitrage%22%3A%20%22Weighted%20Avg.%20Arbitrage%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.fundingType%22%3A%20%22Fund%20Type%22%2C%0A%20%20%20%20%20%20%20%20%22market.selfFund%22%3A%20%22Self%20Fund%22%2C%0A%20%20%20%20%20%20%20%20%22market.bankFund%22%3A%20%22Bank%20Fund%22%2C%0A%20%20%20%20%20%20%20%20%22market.assignTobankFund%22%3A%20%22Assign%20to%20Bank%22%2C%0A%20%20%20%20%20%20%20%20%22market.assignedTobankFund%22%3A%20%22Assigned%20to%20Bank%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.supplierDiscount%22%3A%20%22Supplier%20Discount%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.supplierDiscountPercent%22%3A%20%22Supplier%20Discount%20%25%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.flatSupplierDiscountPercent%22%3A%20%22Flat%20Supplier%20Discount%20%25%22%2C%0A%20%20%20%20%20%20%20%20%22payable.selfFundedInvoicePayments%22%3A%20%22Self%20Funded%20Invoice%20Payments%22%2C%0A%20%20%20%20%20%20%20%20%22payable.bankFundedRePayments%22%3A%20%22Bank%20Funded%20Repayments%22%2C%0A%20%20%20%20%20%20%20%20%22payable.selfFunded%22%3A%20%22Self%20Funded%22%2C%0A%20%20%20%20%20%20%20%20%22payable.bankFunded%22%3A%20%22Bank%20Funded%22%2C%0A%20%20%20%20%20%20%20%20%22payable.totalDuePayments%22%3A%20%22Total%20Due%20Payments%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.invoices.discount%22%3A%20%22Discount%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.invoices.flatDiscount%22%3A%20%22Flat%20Discount%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.invoices.discountAmount%22%3A%20%22Discount%20Amount%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.requests.totalDiscount%22%3A%20%22Total%20Discount%22%2C%0A%20%20%20%20%20%20%20%20%22buyer.performance.DiscountAsInvoiceValue%22%3A%20%22Discount%20as%20%25%20of%20invoice%20value%22%0A%7D%0A; vascopath=YjY2ODNjYjMzMmVhNDIxNg==; JSESSIONID=81233969CCF1AE8CF52BAC8628DDA77E"
+											},
+											{
+												"key": "origin",
+												"value": "https://ddrx-automation.credable.in"
+											},
+											{
+												"key": "priority",
+												"value": "u=1, i"
+											},
+											{
+												"key": "referer",
+												"value": "https://ddrx-automation.credable.in/"
+											},
+											{
+												"key": "sec-ch-ua",
+												"value": "\"Not/A)Brand\";v=\"8\", \"Chromium\";v=\"126\", \"Google Chrome\";v=\"126\""
+											},
+											{
+												"key": "sec-ch-ua-mobile",
+												"value": "?0"
+											},
+											{
+												"key": "sec-ch-ua-platform",
+												"value": "\"Windows\""
+											},
+											{
+												"key": "sec-fetch-dest",
+												"value": "empty"
+											},
+											{
+												"key": "sec-fetch-mode",
+												"value": "cors"
+											},
+											{
+												"key": "sec-fetch-site",
+												"value": "same-origin"
+											},
+											{
+												"key": "user-agent",
+												"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+											},
+											{
+												"key": "x-aguuid",
+												"value": "undefined"
+											},
+											{
+												"key": "x-requested-with",
+												"value": "XMLHttpRequest"
+											},
+											{
+												"key": "X-Uuid",
+												"value": "{{auth}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"searchBuyerName\":\"{{NEWbuyername}}\",\"page\":0,\"size\":10}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://ddrx-automation.credable.in/api/v2/getAllBuyerListMakerAndChecker",
+											"protocol": "https",
+											"host": [
+												"ddrx-automation",
+												"credable",
+												"in"
+											],
+											"path": [
+												"api",
+												"v2",
+												"getAllBuyerListMakerAndChecker"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 26 Jul 2024 08:05:58 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "https://ddrx-automation.credable.in"
+										},
+										{
+											"key": "Access-Control-Allow-Methods",
+											"value": "GET, POST, OPTIONS"
+										},
+										{
+											"key": "Access-Control-Max-Age",
+											"value": "3600"
+										},
+										{
+											"key": "Access-Control-Allow-Headers",
+											"value": "Content-Type, Accept, X-Requested-With, remember-me,X-Uuid,Authorization,responseType,observ, a, b, c, v, j, k"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Content-Disposition, a, b, c, v, j, k, X-Captcha"
+										},
+										{
+											"key": "Expires",
+											"value": "Wed, 31 Dec 1969 23:59:59 GMT"
+										},
+										{
+											"key": "X-Forwarded-Proto",
+											"value": "https"
+										},
+										{
+											"key": "X-Forwarded-For",
+											"value": "127.0.0.0"
+										},
+										{
+											"key": "X-Forwarded-Port",
+											"value": "443"
+										},
+										{
+											"key": "X-FRAME-OPTIONS",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block;"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "strict-transport-security",
+											"value": "max-age=15552000; includeSubDomains; preload"
+										},
+										{
+											"key": "Content-Security-Policy",
+											"value": "default-src * data: blob:;object-src blob:; script-src 127.0.0.1:* *.digio.in localhost:* 'self' *.google-analytics.com *.gstatic.com *.google.com *.googletagmanager.com *.in-freshbots.ai *.pusher.com nr.tn *.nr-data.net *.credable.in *.norton.com *.newrelic.com 52.220.82.99 'unsafe-inline' 'unsafe-eval';style-src data: blob: 'unsafe-inline' *;connect-src localhost:* 127.0.0.1:* 'unsafe-inline'  *.credable.in *.digio.in *.in-freshbots.ai *.pusher.com *.google-analytics.com 52.220.82.99 *.googletagmanager.com *.gstatic.com;"
+										},
+										{
+											"key": "X-Content-Security-Policy",
+											"value": "default-src * data: blob:;object-src blob:; script-src 127.0.0.1:* *.digio.in localhost:* 'self' *.google-analytics.com *.gstatic.com *.google.com *.googletagmanager.com *.in-freshbots.ai *.pusher.com nr.tn *.nr-data.net *.credable.in *.norton.com *.newrelic.com 52.220.82.99 'unsafe-inline' 'unsafe-eval';style-src data: blob: 'unsafe-inline' *;connect-src localhost:* 127.0.0.1:* 'unsafe-inline'  *.credable.in *.digio.in *.in-freshbots.ai *.pusher.com *.google-analytics.com 52.220.82.99 *.googletagmanager.com *.gstatic.com;"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "origin"
+										},
+										{
+											"key": "Permissions-Policy",
+											"value": "fullscreen=(self), sync-xhr=(self), clipboard-read=(self), clipboard-write=(self)"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, must-revalidate;"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"OK\",\n    \"description\": null,\n    \"body\": null,\n    \"data\": {\n        \"number\": 0,\n        \"size\": 10,\n        \"totalPages\": 1,\n        \"numberOfElements\": 1,\n        \"totalElements\": 1,\n        \"previousPage\": false,\n        \"first\": true,\n        \"nextPage\": false,\n        \"last\": true,\n        \"content\": [\n            {\n                \"buyerId\": 155,\n                \"addressLine1\": \"SECTOR 12\",\n                \"addressLine2\": \"SECTOR 14\",\n                \"cinNo\": \"L17110MH1973PLC019482\",\n                \"city\": \"Oka\",\n                \"contactPersonName\": \"SAD SDASD\",\n                \"country\": \"Ascension Island\",\n                \"companyEmail\": \"REZ@yopmail.com\",\n                \"panNo\": \"WZPPW1434D\",\n                \"phone\": \"1234567891\",\n                \"pincode\": 201301,\n                \"state\": \"Qwe\",\n                \"status\": \"ACT\",\n                \"companyName\": \"IUWU\",\n                \"gstinNo\": \"22WZPPW1434D1ZE\",\n                \"imageUrl\": null,\n                \"userId\": null,\n                \"userType\": null,\n                \"userStatus\": null,\n                \"corpArbitrageRate\": 90,\n                \"buyerRating\": {\n                    \"1\": \"AAA\"\n                },\n                \"industryType\": {\n                    \"2\": \"FINANCE Industry\"\n                },\n                \"userDetailsDTOs\": [\n                    {\n                        \"userId\": 1288,\n                        \"userName\": \"or122@yopmail.com\",\n                        \"password\": null,\n                        \"userType\": null,\n                        \"isUserValidated\": null,\n                        \"uuid\": null,\n                        \"permissions\": null,\n                        \"lastAccessTime\": null,\n                        \"status\": \"PDG\",\n                        \"buyerSignupProgress\": null,\n                        \"supplierSignupProgress\": null,\n                        \"loggedInUserType\": null,\n                        \"firstName\": \"SAD\",\n                        \"lastName\": \"SDASD\",\n                        \"buyerImageUrl\": null,\n                        \"supplierImageUrl\": null,\n                        \"buyerCompanyName\": null,\n                        \"supplierCompanyName\": null,\n                        \"ipAddress\": null,\n                        \"userLevel\": \"ADMIN\",\n                        \"roles\": [\n                            {\n                                \"roleId\": 24,\n                                \"role\": \"BUYAPI\",\n                                \"roleDescription\": \"Buyer API\"\n                            }\n                        ],\n                        \"phoneNumber\": \"9876543210\",\n                        \"emailId\": \"or122@yopmail.com\",\n                        \"externalUserId\": \"or122@yopmail.com\",\n                        \"userStatus\": null,\n                        \"userHighlightedField\": [],\n                        \"tncUrl\": null\n                    }\n                ],\n                \"appVersion\": {\n                    \"DDRX\": \"DDRX\"\n                },\n                \"bank_name\": \"SBI\",\n                \"bank_account\": \"1234567\",\n                \"bank_ifsc\": \"SBIN0005943\",\n                \"credableFeeRate\": 10,\n                \"weekOffs\": null,\n                \"marketCloseDuration\": null,\n                \"otpRequired\": true,\n                \"autoApproval\": null,\n                \"buyerHurdleRate\": null,\n                \"integrationType\": null,\n                \"minCreditPeriod\": 90,\n                \"maxCreditPeriod\": 190,\n                \"buyerCode\": \"p12W1\",\n                \"isHurdleRateEditable\": null,\n                \"marketApproveDuration\": null,\n                \"autoProcessStartDuration\": null,\n                \"pmtMode\": null,\n                \"signupInvitePreInvoice\": null,\n                \"dpoEnabled\": null,\n                \"isMonetagoRequestActive\": null,\n                \"emailCCReceivers\": null,\n                \"invoiceFinancingRatio\": null,\n                \"noOfExcludedDays\": null,\n                \"fundingType\": null,\n                \"hurdleRateType\": null,\n                \"hurdleRateBankMap\": null,\n                \"hurdleRateBankId\": null,\n                \"defaultAdaptor\": false,\n                \"vendorDisbursementType\": null,\n                \"tranche1Prct\": null,\n                \"tranche1AccelarationDays\": null,\n                \"inboundFileAdapter\": null,\n                \"outboundFileAdapter\": null,\n                \"treasuryFundAmount\": null,\n                \"rateRenewalType\": null,\n                \"slaSignVia\": \"ESIGN\",\n                \"outputFilesAuditType\": null,\n                \"holiDayYears\": [\n                    \"2024\"\n                ],\n                \"autoProcessTrigger\": null,\n                \"kycRequired\": false,\n                \"screenProgress\": \"DONE\",\n                \"marketApproveDurationMinutes\": null,\n                \"marketCloseDurationMinutes\": null,\n                \"autoProcessStartDurationMinutes\": null,\n                \"paymentBankId\": null,\n                \"paymentBankName\": null,\n                \"isAddFundOtpRequired\": true,\n                \"isLoginOtpRequired\": true,\n                \"isAprvMrktOtpRequired\": true,\n                \"ftpId\": null,\n                \"ftpUrl\": null,\n                \"ftpPass\": null,\n                \"ftpDirectory\": null,\n                \"delayedPmtPenaltyRate\": null,\n                \"pmtAmtType\": null,\n                \"dataSeparator\": null,\n                \"dataSeparatorGeneration\": null,\n                \"paymentAdviceFlag\": null,\n                \"dpoType\": null,\n                \"sendRejectFeed\": null,\n                \"riskUsersEmail\": null,\n                \"emailAttachmetPasscode\": null,\n                \"sendInvUpdCsv\": null,\n                \"postApvPmtReminderReceivers\": null,\n                \"generateCredableFeeInvoice\": \"NA\",\n                \"invoiceAlertInternalMailReceivers\": null,\n                \"weeklyReportGenaration\": null,\n                \"adjustInvDueDate\": null,\n                \"bankRevFeedInternalMailReceivers\": null,\n                \"enablePayableAlertOnMail\": null,\n                \"vendorCreditUtilisationType\": null,\n                \"alertEmailPostInstrFileTransfer\": null,\n                \"enableScrPcrFunding\": null,\n                \"accountLabel\": null,\n                \"district\": \"13\",\n                \"coverageGroup\": \"99\",\n                \"smeCenterHeadMailId\": \"TOU@YOPMAIL.COM\",\n                \"fax\": \"12\",\n                \"constitution\": \"INDI\",\n                \"leiNo\": \"529900T8BM49AURSDO55\",\n                \"dateOfIncorporation\": \"11-Jul-2024\",\n                \"smeCenter\": \"132\",\n                \"paymentAdviceType\": \"EMAIL\",\n                \"accountType\": null,\n                \"vendorAutoMapped\": null,\n                \"paymtDateAdjsmtCalendar\": null,\n                \"externalCorpId\": \"\",\n                \"creditLimitProcessType\": \"ON_HOLD\",\n                \"isBatchProcess\": false,\n                \"batchProcessEndTime\": null,\n                \"batchProcessEndMinutes\": null,\n                \"batchProcessApprovalDuration\": null,\n                \"ewayBillCheck\": null,\n                \"duplicateInvoiceAfterFinancialYear\": null,\n                \"duplicateInvoiceWithInvoiceIdAfterFinancialYear\": null,\n                \"rejectInvoicePostBankMaxSlab\": null,\n                \"staleInvoice\": null,\n                \"staleInvoicePeriod\": null,\n                \"accountOverdue\": null,\n                \"whatsAppNoticationType\": false,\n                \"vendorFinancingProgram\": null,\n                \"invoiceDueDateTenor\": null,\n                \"buyerDetailsRequest\": [],\n                \"requestType\": [],\n                \"buyerStgId\": null,\n                \"buyerConfigStgId\": null,\n                \"invoiceUploadByVendor\": false,\n                \"invoiceSoftCopyMandatory\": false,\n                \"billableDisbursementStartTime\": null,\n                \"billableDisbursementStartMinutes\": null,\n                \"tncAppliedFor\": \"NONE\",\n                \"tncVerificationVia\": \"DIGITAL\",\n                \"vendorStatusFile\": \"NO\",\n                \"invMultiLevelApproval\": \"NO\",\n                \"generateDebitNote\": \"NO\",\n                \"customPaymentDate\": \"SYSTEM_GEN\",\n                \"inactiveEmailTempateIds\": null,\n                \"canUpdateTreasuryFund\": \"NO\",\n                \"bankAllocationBy\": \"ALLOCATION_PERCENT\",\n                \"approveVendorUploadInvoice\": false,\n                \"supplierStatus\": [],\n                \"annualRateBidding\": false,\n                \"invoiceUploadAfterVendorActive\": false,\n                \"vendorLevelAdjustmentLogic\": \"DURING_INVOICE_UPLOAD\",\n                \"sendReverseFeedAfterBankPaymentAck\": false,\n                \"sendPaymentInstrOnHaircutMap\": {},\n                \"sendPaymentInstrOnHaircut\": \"No\",\n                \"invoiceUploadMechanism\": \"Only Incremental\",\n                \"autoEnableReprocessing\": false,\n                \"paymentDateManualVendor\": \"ALL_DATES\",\n                \"maxCreditPeriodMsme\": \"\",\n                \"relationshipManager\": \"TOUSIF\"\n            }\n        ]\n    },\n    \"emailTemlateIds\": {\n        \"SUPP_INV_UPLD_NOTIF\": \"Supp inv upld notif (SUPPLIER)\",\n        \"REPORTING_ON_MAIL\": \"Reporting on mail (BUYER)\",\n        \"POST_APPROVAL_PMT_FILE\": \"Post approval pmt file (BUYER)\",\n        \"BANK_DUE_PAYEMNT_REMINDER\": \"Bank due payemnt reminder (BUYER)\",\n        \"ONHOLD_INV_NOTIF\": \"Onhold inv notif (BUYER)\",\n        \"EXPIRY_OF_BANK_BUYER_CONFIG_RATE\": \"Expiry of bank buyer config rate (BUYER)\",\n        \"VENDOR_CREDIT_CHANGED_LIMIT\": \"Vendor credit changed limit (SUPPLIER)\",\n        \"POST_APPROVAL_PMT_FILE_ATTACHMENT\": \"Post approval pmt file attachment (BUYER)\",\n        \"SUBMIT_BID_MAILLER\": \"Submit bid mailler (SUPPLIER)\",\n        \"EXPIRED_BANK_BUYER_CONFIG_RATE\": \"Expired bank buyer config rate (BUYER)\",\n        \"SUPPLIER_PAYMENT_ADJUSTMENT_REPORT\": \"Supplier payment adjustment report (SUPPLIER)\",\n        \"WEEKLY_BUYER_INVOICE_REPORT\": \"Weekly buyer invoice report (BUYER)\",\n        \"PAYABLE_ALERT_ON_MAIL\": \"Payable alert on mail (BUYER)\",\n        \"BUYER_BANK_REV_FEED_NOT_RCD_ALERT\": \"Buyer bank rev feed not rcd alert (BUYER)\",\n        \"BANK_BUYER_LIMIT_EXHAUSTED\": \"Bank buyer limit exhausted (BUYER)\"\n    },\n    \"vendorOnboardingData\": null\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Buyer Details Edit request-reject",
+					"item": [
+						{
+							"name": "/api/v2/getAllBuyerListMakerAndChecker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.environment.set('buyerStgId', pm.response.json().data.content[0].buyerStgId);\r",
+											"\r",
+											"var responseJson = pm.response.json();\r",
+											"console.log('Full Response:', responseJson);\r",
+											"var responseJson = pm.response.json();\r",
+											"var appVersion = responseJson.data.content[0].appVersion;\r",
+											"\r",
+											"\r",
+											"if (appVersion.DD) {\r",
+											"    pm.environment.set('EditRequestappVersion', 'DDRX');\r",
+											"    console.log('App version is DD. Set EditRequestappVersion to DDRX.');\r",
+											"} else if (appVersion.DDRX) {\r",
+											"    pm.environment.set('EditRequestappVersion', 'DD');\r",
+											"    console.log('App version is DDRX. Set EditRequestappVersion to DD.');\r",
+											"} else {\r",
+											"    console.log('App version is neither DD nor DDRX:', appVersion);\r",
+											"}\r",
+											"setTimeout(() => {\r",
+											"    clearTimeout(timeout);\r",
+											"}, 1000);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"searchBuyerName\":\"{{EditRequestbuyername}}\",\"page\":0,\"size\":10}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/v2/getAllBuyerListMakerAndChecker",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"v2",
+										"getAllBuyerListMakerAndChecker"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/addBuyerRequest",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Buyer Edit Request Sent Successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Buyer Edit Request Sent Successfully\");\r",
+											"});\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"\r",
+											"setTimeout(() => {\r",
+											"    clearTimeout(timeout);\r",
+											"}, 1000);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"function generateRandomString(length) {\r",
+											"    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+											"    var result = '';\r",
+											"    var charactersLength = characters.length; \r",
+											"    for (var i = 0; i < length; i++) {\r",
+											"        result += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+											"    }\r",
+											"    return result;\r",
+											"}\r",
+											"var num=2;\r",
+											"var res=generateRandomString(4)+(1+num++);\r",
+											"    pm.environment.set('EditRequestnewBuyerUserEmail',res+'@yopmail.com');\r",
+											"    var ee=pm.environment.get('EditRequestnewBuyerUserEmail');\r",
+											"    console.log(ee);\r",
+											"var username=generateRandomString(6)+(2+num++);\r",
+											"pm.environment.set('newBuyerUser',username);\r",
+											"\r",
+											"var us=pm.environment.get('newBuyerUser');\r",
+											"console.log(us);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json, text/javascript, */*; q=0.01"
+									},
+									{
+										"key": "accept-language",
+										"value": "en-US,en;q=0.9"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-requested-with",
+										"value": "XMLHttpRequest"
+									},
+									{
+										"key": "x-uuid",
+										"value": "80b25a6d-2bf8-4529-8fc8-6ee251745a50"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"buyerId\":\"{{EditRequestBuyerid}}\",\"addressLine1\":\"Shvbv\",\"addressLine2\":\"\",\"cinNo\":\"L17110MH1973PLC019786\",\"city\":\"Mumbai\",\"imageUrl\":\"\",\"country\":\"Ascension Island\",\"companyEmail\":\"shiv@api.com\",\"panNo\":\"AEFPI9158M\",\"phone\":\"9876543210\",\"pincode\":\"441202\",\"state\":\"Maharashtra\",\"companyName\":\"{{EditRequestbuyername}}\",\"gstinNo\":\"22AEFPI9158M1z5\",\"buyerRating\":\"2\",\"industryType\":\"2\",\"corpArbitrageRate\":\"100\",\"appVersion\":\"{{EditRequestappVersion}}\",\"bank_name\":\"Equentia\",\"bank_account\":\"191929191892\",\"bank_ifsc\":\"SBIN0013528\",\"relationshipManager\":\"Arun\",\"minCreditPeriod\":\"1\",\"maxCreditPeriod\":\"120\",\"buyerCode\":\"APIBUYER\",\"kycRequired\":false,\"screenProgress\":\"DONE\",\"initialSetupWizard\":\"DONE\",\"accountLabel\":\"\",\"district\":\"\",\"coverageGroup\":\"\",\"smeCenterHeadMailId\":\"\",\"fax\":\"\",\"constitution\":\"\",\"leiNo\":\"315700N4TLZCMSF1PG82\",\"dateOfIncorporation\":\"01-Nov-2013\",\"smeCenter\":\"\",\"externalCorpId\":\"\",\"tncAppliedFor\":\"NONE\",\"tncVerificationVia\":\"DIGITAL\",\"isBuyerEdit\":true,\"userDetails\":[{\"roleIds\":[31],\"userLevel\":\"USER\",\"emailId\":\"{{EditRequestnewBuyerUserEmail}}\",\"firstName\":\"qow\",\"lastName\":\"ier\",\"userName\":\"{{newBuyerUser}}\",\"phoneNumber\":\"9876543210\",\"externalUserId\":\"\",\"id\":1,\"roles\":[{\"roleId\":\"31\",\"roleDescription\":\"Buyer\"}]}]}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/addBuyerRequest",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"addBuyerRequest"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/v2/getAllBuyerListMakerAndChecker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"pm.environment.set('buyerStgId', pm.response.json().data.content[0].buyerStgId);\r",
+											" "
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"searchBuyerName\":\"{{EditRequestbuyername}}\",\"page\":0,\"size\":10}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/v2/getAllBuyerListMakerAndChecker",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"v2",
+										"getAllBuyerListMakerAndChecker"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/addBuyerApproval-reject",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Maker request rejected successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Maker request rejected successfully\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{checkerauth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json, text/javascript, */*; q=0.01"
+									},
+									{
+										"key": "accept-language",
+										"value": "en-US,en;q=0.9"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Uuid",
+										"value": "{{checkerauth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"checkerResponse\":\"REJECT\",\"buyerStgId\":{{buyerStgId}}}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/addBuyerApproval",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"addBuyerApproval"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Buyer Details  Edit request-Approve",
+					"item": [
+						{
+							"name": "/api/v2/getAllBuyerListMakerAndChecker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set('buyerStgId', pm.response.json().data.content[0].buyerStgId);\r",
+											"\r",
+											"var responseJson = pm.response.json();\r",
+											"console.log('Full Response:', responseJson);\r",
+											"var responseJson = pm.response.json();\r",
+											"var appVersion = responseJson.data.content[0].appVersion;\r",
+											"\r",
+											"\r",
+											"if (appVersion.DD) {\r",
+											"    pm.environment.set('EditRequestappVersion', 'DDRX');\r",
+											"    console.log('App version is DD. Set EditRequestappVersion to DDRX.');\r",
+											"} else if (appVersion.DDRX) {\r",
+											"    pm.environment.set('EditRequestappVersion', 'DD');\r",
+											"    console.log('App version is DDRX. Set EditRequestappVersion to DD.');\r",
+											"} else {\r",
+											"    console.log('App version is neither DD nor DDRX:', appVersion);\r",
+											"}\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"searchBuyerName\":\"{{EditRequestbuyername}}\",\"page\":0,\"size\":10}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/v2/getAllBuyerListMakerAndChecker",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"v2",
+										"getAllBuyerListMakerAndChecker"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/addBuyerRequest",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Buyer Edit Request Sent Successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Buyer Edit Request Sent Successfully\");\r",
+											"});\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"function generateRandomString(length) {\r",
+											"    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+											"    var result = '';\r",
+											"    var charactersLength = characters.length; \r",
+											"    for (var i = 0; i < length; i++) {\r",
+											"        result += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+											"    }\r",
+											"    return result;\r",
+											"}\r",
+											"var num=2;\r",
+											"var res=generateRandomString(4)+(1+num++);\r",
+											"    pm.environment.set('EditRequestnewBuyerUserEmail',res+'@yopmail.com');\r",
+											"    var ee=pm.environment.get('EditRequestnewBuyerUserEmail');\r",
+											"    console.log(ee);\r",
+											"var username=generateRandomString(6)+(2+num++);\r",
+											"pm.environment.set('newBuyerUser',username);\r",
+											"\r",
+											"var us=pm.environment.get('newBuyerUser');\r",
+											"console.log(us);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json, text/javascript, */*; q=0.01"
+									},
+									{
+										"key": "accept-language",
+										"value": "en-US,en;q=0.9"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-requested-with",
+										"value": "XMLHttpRequest"
+									},
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"buyerId\":\"{{EditRequestBuyerid}}\",\"addressLine1\":\"Shvbv\",\"addressLine2\":\"\",\"cinNo\":\"L17110MH1973PLC019786\",\"city\":\"Mumbai\",\"imageUrl\":\"\",\"country\":\"Ascension Island\",\"companyEmail\":\"shiv@api.com\",\"panNo\":\"AEFPI9158M\",\"phone\":\"9876543210\",\"pincode\":\"441202\",\"state\":\"Maharashtra\",\"companyName\":\"{{EditRequestbuyername}}\",\"gstinNo\":\"22AEFPI9158M1z5\",\"buyerRating\":\"2\",\"industryType\":\"2\",\"corpArbitrageRate\":\"100\",\"appVersion\":\"{{EditRequestappVersion}}\",\"bank_name\":\"Equentia\",\"bank_account\":\"191929191892\",\"bank_ifsc\":\"SBIN0013528\",\"relationshipManager\":\"Arun\",\"minCreditPeriod\":\"1\",\"maxCreditPeriod\":\"120\",\"buyerCode\":\"APIBUYER\",\"kycRequired\":false,\"screenProgress\":\"DONE\",\"initialSetupWizard\":\"DONE\",\"accountLabel\":\"\",\"district\":\"\",\"coverageGroup\":\"\",\"smeCenterHeadMailId\":\"\",\"fax\":\"\",\"constitution\":\"\",\"leiNo\":\"315700N4TLZCMSF1PG82\",\"dateOfIncorporation\":\"01-Nov-2013\",\"smeCenter\":\"\",\"externalCorpId\":\"\",\"tncAppliedFor\":\"NONE\",\"tncVerificationVia\":\"DIGITAL\",\"isBuyerEdit\":true,\"userDetails\":[{\"roleIds\":[31],\"userLevel\":\"USER\",\"emailId\":\"{{EditRequestnewBuyerUserEmail}}\",\"firstName\":\"qow\",\"lastName\":\"ier\",\"userName\":\"{{newBuyerUser}}\",\"phoneNumber\":\"9876543210\",\"externalUserId\":\"\",\"id\":1,\"roles\":[{\"roleId\":\"31\",\"roleDescription\":\"Buyer\"}]}]}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/addBuyerRequest",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"addBuyerRequest"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/v2/getAllBuyerListMakerAndChecker Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set('buyerStgId', pm.response.json().data.content[0].buyerStgId);\r",
+											" pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"searchBuyerName\":\"{{EditRequestbuyername}}\",\"page\":0,\"size\":10}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/v2/getAllBuyerListMakerAndChecker",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"v2",
+										"getAllBuyerListMakerAndChecker"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/addBuyerApproval-Approve",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Buyer Edited Successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Buyer Edited Successfully\");\r",
+											"});\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{checkerauth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json, text/javascript, */*; q=0.01"
+									},
+									{
+										"key": "accept-language",
+										"value": "en-US,en;q=0.9"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Uuid",
+										"value": "{{checkerauth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"checkerResponse\":\"APPROVE\",\"buyerStgId\":{{buyerStgId}}}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/addBuyerApproval",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"addBuyerApproval"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/addBuyerApproval-Approve",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json, text/javascript, */*; q=0.01"
+											},
+											{
+												"key": "accept-language",
+												"value": "en-US,en;q=0.9"
+											},
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "X-Uuid",
+												"value": "{{checkerauth}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"checkerResponse\":\"APPROVE\",\"buyerStgId\":{{buyerStgId}}}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseurl}}api/addBuyerApproval",
+											"host": [
+												"{{baseurl}}api"
+											],
+											"path": [
+												"addBuyerApproval"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 26 Jul 2024 09:27:00 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "https://ddrx-automation.credable.in"
+										},
+										{
+											"key": "Access-Control-Allow-Methods",
+											"value": "GET, POST, OPTIONS"
+										},
+										{
+											"key": "Access-Control-Max-Age",
+											"value": "3600"
+										},
+										{
+											"key": "Access-Control-Allow-Headers",
+											"value": "Content-Type, Accept, X-Requested-With, remember-me,X-Uuid,Authorization,responseType,observ, a, b, c, v, j, k"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Content-Disposition, a, b, c, v, j, k, X-Captcha"
+										},
+										{
+											"key": "Expires",
+											"value": "Wed, 31 Dec 1969 23:59:59 GMT"
+										},
+										{
+											"key": "X-Forwarded-Proto",
+											"value": "https"
+										},
+										{
+											"key": "X-Forwarded-For",
+											"value": "127.0.0.0"
+										},
+										{
+											"key": "X-Forwarded-Port",
+											"value": "443"
+										},
+										{
+											"key": "X-FRAME-OPTIONS",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block;"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "strict-transport-security",
+											"value": "max-age=15552000; includeSubDomains; preload"
+										},
+										{
+											"key": "Content-Security-Policy",
+											"value": "default-src * data: blob:;object-src blob:; script-src 127.0.0.1:* *.digio.in localhost:* 'self' *.google-analytics.com *.gstatic.com *.google.com *.googletagmanager.com *.in-freshbots.ai *.pusher.com nr.tn *.nr-data.net *.credable.in *.norton.com *.newrelic.com 52.220.82.99 'unsafe-inline' 'unsafe-eval';style-src data: blob: 'unsafe-inline' *;connect-src localhost:* 127.0.0.1:* 'unsafe-inline'  *.credable.in *.digio.in *.in-freshbots.ai *.pusher.com *.google-analytics.com 52.220.82.99 *.googletagmanager.com *.gstatic.com;"
+										},
+										{
+											"key": "X-Content-Security-Policy",
+											"value": "default-src * data: blob:;object-src blob:; script-src 127.0.0.1:* *.digio.in localhost:* 'self' *.google-analytics.com *.gstatic.com *.google.com *.googletagmanager.com *.in-freshbots.ai *.pusher.com nr.tn *.nr-data.net *.credable.in *.norton.com *.newrelic.com 52.220.82.99 'unsafe-inline' 'unsafe-eval';style-src data: blob: 'unsafe-inline' *;connect-src localhost:* 127.0.0.1:* 'unsafe-inline'  *.credable.in *.digio.in *.in-freshbots.ai *.pusher.com *.google-analytics.com 52.220.82.99 *.googletagmanager.com *.gstatic.com;"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "origin"
+										},
+										{
+											"key": "Permissions-Policy",
+											"value": "fullscreen=(self), sync-xhr=(self), clipboard-read=(self), clipboard-write=(self)"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, must-revalidate;"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"OK\",\n    \"description\": \"Buyer Edited Successfully\",\n    \"body\": null\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Buyer  Details Edit request-Approval Pending",
+					"item": [
+						{
+							"name": "/api/v2/getAllBuyerListMakerAndChecker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set('buyerStgId', pm.response.json().data.content[0].buyerStgId);\r",
+											"\r",
+											"\r",
+											"var responseJson = pm.response.json();\r",
+											"console.log('Full Response:', responseJson);\r",
+											"var responseJson = pm.response.json();\r",
+											"var appVersion = responseJson.data.content[0].appVersion;\r",
+											"\r",
+											"\r",
+											"if (appVersion.DD) {\r",
+											"    pm.environment.set('EditRequestappVersion', 'DDRX');\r",
+											"    console.log('App version is DD. Set EditRequestappVersion to DDRX.');\r",
+											"} else if (appVersion.DDRX) {\r",
+											"    pm.environment.set('EditRequestappVersion', 'DD');\r",
+											"    console.log('App version is DDRX. Set EditRequestappVersion to DD.');\r",
+											"} else {\r",
+											"    console.log('App version is neither DD nor DDRX:', appVersion);\r",
+											"}\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"searchBuyerName\":\"{{EditRequestbuyername}}\",\"page\":0,\"size\":10}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/v2/getAllBuyerListMakerAndChecker",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"v2",
+										"getAllBuyerListMakerAndChecker"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/addBuyerRequest",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"test name\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.description).to.eql(\"Buyer Edit Request Sent Successfully\");\r",
+											"});\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"function generateRandomString(length) {\r",
+											"    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+											"    var result = '';\r",
+											"    var charactersLength = characters.length; \r",
+											"    for (var i = 0; i < length; i++) {\r",
+											"        result += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+											"    }\r",
+											"    return result;\r",
+											"}\r",
+											"var num=2;\r",
+											"var res=generateRandomString(4)+(1+num++);\r",
+											"    pm.environment.set('EditRequestnewBuyerUserEmail',res+'@yopmail.com');\r",
+											"    var ee=pm.environment.get('EditRequestnewBuyerUserEmail');\r",
+											"    console.log(ee);\r",
+											"var username=generateRandomString(6)+(2+num++);\r",
+											"pm.environment.set('newBuyerUser',username);\r",
+											"\r",
+											"var us=pm.environment.get('newBuyerUser');\r",
+											"console.log(us);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json, text/javascript, */*; q=0.01"
+									},
+									{
+										"key": "accept-language",
+										"value": "en-US,en;q=0.9"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-requested-with",
+										"value": "XMLHttpRequest"
+									},
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"buyerId\":\"{{EditRequestBuyerid}}\",\"addressLine1\":\"Shvbv\",\"addressLine2\":\"\",\"cinNo\":\"L17110MH1973PLC019786\",\"city\":\"Mumbai\",\"imageUrl\":\"\",\"country\":\"Ascension Island\",\"companyEmail\":\"shiv@api.com\",\"panNo\":\"AEFPI9158M\",\"phone\":\"9876543210\",\"pincode\":\"441202\",\"state\":\"Maharashtra\",\"companyName\":\"{{EditRequestbuyername}}\",\"gstinNo\":\"22AEFPI9158M1z5\",\"buyerRating\":\"2\",\"industryType\":\"2\",\"corpArbitrageRate\":\"100\",\"appVersion\":\"{{EditRequestappVersion}}\",\"bank_name\":\"Equentia\",\"bank_account\":\"191929191892\",\"bank_ifsc\":\"SBIN0013528\",\"relationshipManager\":\"Arun\",\"minCreditPeriod\":\"1\",\"maxCreditPeriod\":\"120\",\"buyerCode\":\"APIBUYER\",\"kycRequired\":false,\"screenProgress\":\"DONE\",\"initialSetupWizard\":\"DONE\",\"accountLabel\":\"\",\"district\":\"\",\"coverageGroup\":\"\",\"smeCenterHeadMailId\":\"\",\"fax\":\"\",\"constitution\":\"\",\"leiNo\":\"315700N4TLZCMSF1PG82\",\"dateOfIncorporation\":\"01-Nov-2013\",\"smeCenter\":\"\",\"externalCorpId\":\"\",\"tncAppliedFor\":\"NONE\",\"tncVerificationVia\":\"DIGITAL\",\"isBuyerEdit\":true,\"userDetails\":[{\"roleIds\":[31],\"userLevel\":\"USER\",\"emailId\":\"{{EditRequestnewBuyerUserEmail}}\",\"firstName\":\"qow\",\"lastName\":\"ier\",\"userName\":\"{{newBuyerUser}}\",\"phoneNumber\":\"9876543210\",\"externalUserId\":\"\",\"id\":1,\"roles\":[{\"roleId\":\"31\",\"roleDescription\":\"Buyer\"}]}]}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/addBuyerRequest",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"addBuyerRequest"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/addBuyerRequest-multiple request",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Request already placed for this buyer\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Request already placed for this buyer\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"BADREQUEST\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"BADREQUEST\");\r",
+											"});\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json, text/javascript, */*; q=0.01"
+									},
+									{
+										"key": "accept-language",
+										"value": "en-US,en;q=0.9"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "x-requested-with",
+										"value": "XMLHttpRequest"
+									},
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"buyerId\":\"{{EditRequestBuyerid}}\",\"addressLine1\":\"Shvbv\",\"addressLine2\":\"\",\"cinNo\":\"L17110MH1973PLC019786\",\"city\":\"Mumbai\",\"imageUrl\":\"\",\"country\":\"Ascension Island\",\"companyEmail\":\"shiv@api.com\",\"panNo\":\"AEFPI9158M\",\"phone\":\"9876543210\",\"pincode\":\"441202\",\"state\":\"Maharashtra\",\"companyName\":\"{{EditRequestbuyername}}\",\"gstinNo\":\"22AEFPI9158M1z5\",\"buyerRating\":\"2\",\"industryType\":\"2\",\"corpArbitrageRate\":\"100\",\"appVersion\":\"{{EditRequestappVersion}}\",\"bank_name\":\"Equentia\",\"bank_account\":\"191929191892\",\"bank_ifsc\":\"SBIN0013528\",\"relationshipManager\":\"Arun\",\"minCreditPeriod\":\"1\",\"maxCreditPeriod\":\"120\",\"buyerCode\":\"APIBUYER\",\"kycRequired\":false,\"screenProgress\":\"DONE\",\"initialSetupWizard\":\"DONE\",\"accountLabel\":\"\",\"district\":\"\",\"coverageGroup\":\"\",\"smeCenterHeadMailId\":\"\",\"fax\":\"\",\"constitution\":\"\",\"leiNo\":\"315700N4TLZCMSF1PG82\",\"dateOfIncorporation\":\"01-Nov-2013\",\"smeCenter\":\"\",\"externalCorpId\":\"\",\"tncAppliedFor\":\"NONE\",\"tncVerificationVia\":\"DIGITAL\",\"isBuyerEdit\":true,\"userDetails\":[{\"roleIds\":[31],\"userLevel\":\"USER\",\"emailId\":\"{{EditRequestnewBuyerUserEmail}}\",\"firstName\":\"qow\",\"lastName\":\"ier\",\"userName\":\"{{newBuyerUser}}\",\"phoneNumber\":\"9876543210\",\"externalUserId\":\"\",\"id\":1,\"roles\":[{\"roleId\":\"31\",\"roleDescription\":\"Buyer\"}]}]}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/addBuyerRequest",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"addBuyerRequest"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/v2/getAllBuyerListMakerAndChecker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.environment.set('buyerStgId',pm.response.json().data.content[0].buyerStgId);\r",
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{checkerauth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{checkerauth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"searchBuyerName\":\"{{EditRequestbuyername}}\",\"page\":0,\"size\":10}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/v2/getAllBuyerListMakerAndChecker",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"v2",
+										"getAllBuyerListMakerAndChecker"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/addBuyerApproval-Approve",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Buyer Edited Successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Buyer Edited Successfully\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{checkerauth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "accept",
+										"value": "application/json, text/javascript, */*; q=0.01"
+									},
+									{
+										"key": "accept-language",
+										"value": "en-US,en;q=0.9"
+									},
+									{
+										"key": "content-type",
+										"value": "application/json"
+									},
+									{
+										"key": "X-Uuid",
+										"value": "{{checkerauth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"checkerResponse\":\"APPROVE\",\"buyerStgId\":{{buyerStgId}}}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/addBuyerApproval",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"addBuyerApproval"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "/api/addBuyerApproval-Approve",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json, text/javascript, */*; q=0.01"
+											},
+											{
+												"key": "accept-language",
+												"value": "en-US,en;q=0.9"
+											},
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "X-Uuid",
+												"value": "{{checkerauth}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"checkerResponse\":\"APPROVE\",\"buyerStgId\":{{buyerStgId}}}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://ddrx-automation.credable.in/api/addBuyerApproval",
+											"protocol": "https",
+											"host": [
+												"ddrx-automation",
+												"credable",
+												"in"
+											],
+											"path": [
+												"api",
+												"addBuyerApproval"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Server",
+											"value": "nginx"
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 26 Jul 2024 09:38:35 GMT"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Access-Control-Allow-Credentials",
+											"value": "true"
+										},
+										{
+											"key": "Access-Control-Allow-Origin",
+											"value": "https://ddrx-automation.credable.in"
+										},
+										{
+											"key": "Access-Control-Allow-Methods",
+											"value": "GET, POST, OPTIONS"
+										},
+										{
+											"key": "Access-Control-Max-Age",
+											"value": "3600"
+										},
+										{
+											"key": "Access-Control-Allow-Headers",
+											"value": "Content-Type, Accept, X-Requested-With, remember-me,X-Uuid,Authorization,responseType,observ, a, b, c, v, j, k"
+										},
+										{
+											"key": "Access-Control-Expose-Headers",
+											"value": "Content-Disposition, a, b, c, v, j, k, X-Captcha"
+										},
+										{
+											"key": "Expires",
+											"value": "Wed, 31 Dec 1969 23:59:59 GMT"
+										},
+										{
+											"key": "X-Forwarded-Proto",
+											"value": "https"
+										},
+										{
+											"key": "X-Forwarded-For",
+											"value": "127.0.0.0"
+										},
+										{
+											"key": "X-Forwarded-Port",
+											"value": "443"
+										},
+										{
+											"key": "X-FRAME-OPTIONS",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "1; mode=block;"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "strict-transport-security",
+											"value": "max-age=15552000; includeSubDomains; preload"
+										},
+										{
+											"key": "Content-Security-Policy",
+											"value": "default-src * data: blob:;object-src blob:; script-src 127.0.0.1:* *.digio.in localhost:* 'self' *.google-analytics.com *.gstatic.com *.google.com *.googletagmanager.com *.in-freshbots.ai *.pusher.com nr.tn *.nr-data.net *.credable.in *.norton.com *.newrelic.com 52.220.82.99 'unsafe-inline' 'unsafe-eval';style-src data: blob: 'unsafe-inline' *;connect-src localhost:* 127.0.0.1:* 'unsafe-inline'  *.credable.in *.digio.in *.in-freshbots.ai *.pusher.com *.google-analytics.com 52.220.82.99 *.googletagmanager.com *.gstatic.com;"
+										},
+										{
+											"key": "X-Content-Security-Policy",
+											"value": "default-src * data: blob:;object-src blob:; script-src 127.0.0.1:* *.digio.in localhost:* 'self' *.google-analytics.com *.gstatic.com *.google.com *.googletagmanager.com *.in-freshbots.ai *.pusher.com nr.tn *.nr-data.net *.credable.in *.norton.com *.newrelic.com 52.220.82.99 'unsafe-inline' 'unsafe-eval';style-src data: blob: 'unsafe-inline' *;connect-src localhost:* 127.0.0.1:* 'unsafe-inline'  *.credable.in *.digio.in *.in-freshbots.ai *.pusher.com *.google-analytics.com 52.220.82.99 *.googletagmanager.com *.gstatic.com;"
+										},
+										{
+											"key": "Referrer-Policy",
+											"value": "origin"
+										},
+										{
+											"key": "Permissions-Policy",
+											"value": "fullscreen=(self), sync-xhr=(self), clipboard-read=(self), clipboard-write=(self)"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, must-revalidate;"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"status\": \"OK\",\n    \"description\": \"Buyer Edited Successfully\",\n    \"body\": null\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "BankBuyer Edit Request",
+					"item": [
+						{
+							"name": "/api/fetchAllBankBuyerConfig",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set('bankBuyerConfigId',pm.response.json().bankPrefDetailDTOs[0].bankBuyerConfigId);\r",
+											"\r",
+											"pm.test(\"fund all buyers called successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"fund all buyers called successfully\");\r",
+											"});\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											" var channel=pm.response.json().bankPrefDetailDTOs[0].bankPmtInstrChannel;\r",
+											"\r",
+											"\r",
+											"\r",
+											"switch (channel) {\r",
+											"    case 'API':\r",
+											"        pm.environment.set('BuyerbankEdit payment channnel-api-sftp', 'SFTP');\r",
+											"        console.log('Channel switched to SFTP');\r",
+											"        break;\r",
+											"    case 'SFTP':\r",
+											"        pm.environment.set('BuyerbankEdit payment channnel-api-sftp', 'API');\r",
+											"        console.log('Channel switched to API');\r",
+											"        break;\r",
+											"    default:\r",
+											"        console.log('Invalid channel:', channel);\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-uid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"linedupAmount\":0,\"bankId\":21,\"searchBuyerName\":\"Regression Buyer16\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/fetchAllBankBuyerConfig",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"fetchAllBankBuyerConfig"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "createBankRequestPrefDetail",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});pm.test(\"Config change request sent\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.description).to.eql(\"Config change request sent\");\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"bankId\":21,\"bankConfigId\":21,\"bankBuyerConfigDTO\":{\"bankBuyerConfigId\":128,\"bankBuyerConfigStgId\":null,\"status\":\"ACTIVE\",\"col1\":\"34\",\"col2\":\"27\",\"col3\":\"32\",\"col4\":\"34\",\"col5\":\"34\",\"col6\":\"2312\",\"col7\":\"24\",\"col8\":\"15\",\"col9\":\"15\",\"col10\":\"28\",\"pmtInstrType\":\"CSV\",\"applyAdjustmentsOnHairCut\":true,\"bankPmtInstrChannel\":\"{{BuyerbankEdit payment channnel-api-sftp}}\",\"pmtInstrDateType\":\"CALCULATED_DUE_DATE\",\"pmtInstrAmountType\":\"CALCULATED_PAYMENT_AMOUNT\",\"notifyCorpToAppvPmt\":\"ON_BANK_ACK\",\"accountNumber\":\"{{BuyerbankEdit accountno}}\",\"linedupAmount\":\"3498765234\",\"paymentFileVendorCodeType\":\"FINANCIER_CODE\",\"paymentFileVersion\":null,\"copyFilesToCorp\":true,\"isDefaultBank\":true,\"canProcessNonFundTxns\":true,\"corpLevelApproval\":true,\"alertEmailPostInstrFileTransfer\":\"EMAIL_TO_INFORM_SFTP_TRANSFER\",\"cifId\":\"54\",\"accountType\":\"\",\"branchCode\":\"43\",\"limitExpiryDate\":\"\",\"coolingPeriodApplicable\":false,\"coolingPeriod\":\"0\",\"coolingPeriodInterestRate\":\"0\",\"blockDiscountingDuringCoolingPeriod\":false,\"chargePenalInterestRateDuringCp\":\"NO\",\"dueDateAdjustmentCalendar\":\"BANK_CALENDAR\",\"dueDateAdjustment\":\"PRE_SHIFT\",\"loanAccountNumber\":\"\",\"discountingType\":\"FRONTEND\",\"programType\":\"BANK\"}}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/createBankRequestPrefDetail",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"createBankRequestPrefDetail"
+									]
+								},
+								"description": "Generated from cURL: curl 'https://ddrx-automation.credable.in/api/createBankRequestPrefDetail' \\\r\n  -H 'accept: application/json, text/javascript, */*; q=0.01' \\\r\n  -H 'accept-language: en-US,en;q=0.9' \\\r\n  -H 'content-type: application/json' \\\r\n  -H 'cookie: _ga=GA1.2.1194967073.1722519521; _gid=GA1.2.1537284144.1723448447; mle=false; mlePhrase=J2ac0uAC6ghHMfG9uOCvmV0iDuP2v8F7HCG9U83wikrqBALu5Q0heHJlAZhmBHE0; captchaSiteKey=; captchaEnabled=false; chatBotHash=46f4815551662adf9b725cc40e19e350b2a9; digioEnvironment=sandbox; X-Uuid=67000e11-90db-48fb-8af9-018d06dab8ba; locationHistory=2024-08-12T13%3A19%3A05; IP=127.0.0.1; userId=1; userName=TEST%40bt.maker; userType=ADMIN; permission=UPDVCF%2CMISPGE%2CINVREP%2CESCLDP%2CROLADM%2CBMINRP%2CVALOTP%2CFBSCAD%2CADDPER%2CGETSCT%2CGETBRS%2CUPTMRK%2CGETBRI%2CRATRPT%2CGBMCLR%2CSINDRX%2CGETAPF%2CPERADM%2CBCNDTL%2CGTARML%2CBASUMR%2CGETSCL%2CADDVAC%2CECARPT%2CKYCRPT%2CUPTUSR%2CGETSUR%2CGETSUP%2CFORPWD%2CUSRRPT%2CBUMKCK%2CGNVACC%2CSWBANK%2CFBNRMD%2CREPMTS%2CRINVMR%2CSPRTCF%2CGETEIB%2CGETHOL%2CFRMRHD%2CSMPFCR%2CGTALPR%2CFSAOIM%2CFTCPYM%2CATHBCH%2CUPINVA%2CIFUPRE%2CTNCP%2CSRCIBB%2CINTUSR%2CBYUTRE%2CAPPORT%2CPMTAPR%2CUPBSER%2CFAXBOF%2CUAOSIC%2CGSBYB%2CFBSCCD%2CUAOSIM%2CUBSCAD%2CFALBBC%2CUSRDSB%2CFSACDT%2CGTSTIN%2CFESCLD%2CRMREPT%2CFCVSLA%2CRMUSSN%2CUPDIMG%2CUBSCCD%2CSUPUPD%2CUMRKTC%2CUPDUDT%2CFTINDX%2CDOCUPD%2CALLBUY%2CRSKCNT%2CUPHOLR%2CMRKTRP%2CFCBSLA%2CTNCAGR%2CCSDRPT%2CUPDPTD%2CTATREP%2CAVDONP%2CGETMLR%2CRMLSRT%2CATHDTL%2CADDBUY%2CFUDFLI%2CAPYPOR%2CSUPINV%2CBILWFR%2CINDADM%2CINVRJF%2CBATHDR%2CDIBSUP%2CSUPRPT%2CFVACCD%2CTERMCN%2CFTRFMC%2CSUBLMM%2CREUTNC%2CSOFDIJ%2CFTPPWH%2CPTBUSF%2CRSTPWD%2CGETEMT%2CUPDBYC%2CUPIFAM%2CUPLAOC%2CAPDRPT%2CFCHRIS%2CALLEMT%2CDWNBTN%2CTLAPRJ%2CMRKTCF%2CCMISPG%2CUPRMDT%2CBNKLST%2CVBUDFU%2CGENOTP%2CFAPFRP%2CMONDSB%2CADDSUR%2CGECPFM%2CINEXMP%2CSNDNOT%2CRLDCHE%2CFRFBBR%2CSRCHDT%2CAVAMRE%2CUPCRLM%2CSFTDRI%2CADRMPG%2CGRLUSR%2CSUPDSH%2CABSCCD%2CREPHDR%2CADBNRQ%2CROLPRT%2CEDTPER%2CUROLUS%2CCHAPAS%2CGETPUR%2CCRTPMT%2CPRTBS%2CBUYLST%2CREFREP%2CAPYRPT%2CSUPUSR%2CUSRLOG%2CAUTRPR%2CBUHOLI%2CDWMISR%2CRBIRRD%2CGETBID%2CDISPMT%2CRBIRRG%2CALBULT%2CACTUSR%2CVIWACT%2CFNDBYR%2CSBMCLR%2CSUPBUR%2CBYRWFR%2CALLFDW%2CFMKTCH%2CUBSFRD%2CSVETMP%2CFEPMTC%2CBUYADP%2CADUTRP%2CGBUPER%2CBUYADM%2CUPDSUP%2CDWNFIL%2COLAPRJ%2CADDBRC%2CUPDBCR%2CGETPER%2CCREOFR%2CSAVSLA%2CUPMCLR%2CHOLSF%2CFTCBUY%2CUBKBSC%2CADDBBP%2CUPBSLT%2CRETRYP%2CSUBFED%2CSNDOTP%2CFINVMP%2CALLCMP%2CGETDOD%2CLGDTPE%2CPRFUBY%2CDELPAY%2CVIWSUP%2CSHWBUY%2CPMTMPG%2CAPPINV%2CADDROL%2CACVRVA%2CUPTPRL%2CAPBNRQ%2CGPYBND%2CCLLRPT%2CUSRADM%2CADDIND%2CEDSUPC%2CFINBFS%2CCRBBDD%2CAREVEW%2CFUPBSL%2CLONREP%2CVASPGE%2CINVRPT%2CACPORT%2CIRFCAP%2CGETUSR%2CUPDEML%2CUPSUPD%2CBMWRP%2CPRFUBK%2CGBKACK%2CFEBYSC%2CSNDPYF%2CNODATE%2CASIRPT%2CSABSLA%2CFCHINV%2CFSUPLI%2CDSOFAD%2CUPBYSC%2CGINTUR%2CUPDCAM%2CADDBNK%2CCHEREF%2CRSKUDT%2CADDUSR%2CFBKBSC%2CAVINVR%2CADMMIS%2CSBBDRD%2CADUPS%2CGETROL%2CCHKSTS%2CBNKADM%2CGECPMU%2CRMRPTS%2CEDTIND%2CSRCSUR%2CVSONDE%2CAUTOTP%2CRRECON%2CALERTS%2CFCHBRC%2CUPFLOG%2CBULAOC%2CSAVBPD%2CEMLMNT%2CBUYMON%2CABSRB%2CADBYRQ%2CGECPMH%2CFCHSCR%2CUSPAIN%2CRVTPMT%2CSUPSF%2CAXADRP%2CADEMAI%2CUPDINV%2CFBSFRD%2CRSKALT%2CUPSACS%2CADMRPT%2CBURMCK%2CGETDDN%2CGMCLRC%2CADMINP%2CGTDATS%2CRSKRPT%2CADDRM%2CGETIND%2CFURDUE%2CGTBMRK%2CCEFSVA%2CSTINPG%2CFECHAC%2CFILBYB%2CABRBY%2CSSMGRM%2CREVFED%2CGETBAT%2CADIUSR%2CINVSFD%2CDWNDOC%2CCONRPT%2CVLLOTP%2CCRDLMT%2CEDTPMT%2CADDOFF%2CCLTMIS%2CGETFIL%2CADINUP%2CBMSURP%2CUPDCT%2CUPSCHT%2CATHHDR%2CCLMRHD%2CUPTSUP%2CUPDHOL%2CBATDTS%2CREFBNK%2CFEBLMM%2CGINVHD%2CINVDIS%2CGETRM%2CUPDSTS%2CSPARPT%2CBCNHDR%2CSUCRLM; firstName=Admin; lastName=Maker; userKycStatus=null; isKycRequired=null; supplierIdForVendorOnboard=null; signUpProgressForVendorOnboarding=null; chatBotFlag=false; applicationPlatform=DDRX; isUserLogin=1; uiCountry=null; buyerClosedMarket=1; isPasswordActive=true; campaigns=null; campaignsFlag=false; uiTranslations=%0A%7B%0A%20%20%20%20%20%20%20%20%22buyer_dashboard.totalSavings%22%20%3A%20%22Total%20Savings%22%2C%0A%20%20%20%20%20%20%20%20%22buyer_dashboard.totalDiscountOffered%22%20%3A%20%22Total%20Discount%20Offered%22%2C%0A%20%20%20%20%20%20%20%20%22invoice_fundingType.bankFunded%22%3A%20%22Bank%20Funded%22%2C%0A%20%20%20%20%20%20%20%20%22invoice_fundingType.selfFunded%22%3A%20%22Self%20Funded%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.discountAmount%22%3A%20%22Discount%20Amount%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.supplierDiscountAmount%22%3A%20%22Supplier%20Discount%20Amount%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.irrPer%22%3A%20%22IRR%20%25%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.supplierDiscountAnnualizedPer%22%3A%20%22Annualized%20Discount%20%25(Invoice%20ROI)%22%2C%0A%20%20%20%20%20%20%20%20%22invoice_filter.discount%22%3A%20%22Discount%22%2C%0A%20%20%20%20%20%20%20%20%22invoice_filter.flatSupplierDiscount%22%3A%20%22Flat%20Supplier%20Discount%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.invoiceAmount%22%3A%20%22Invoice%20Amount%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.gst%22%3A%20%22GST%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.tds%22%3A%20%22TDS%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.netAmount%22%3A%20%22Net%20Amount%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.panNo%22%3A%20%22Pan%20No.%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.gstin%22%3A%20%22GSTIN%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.ifscCode%22%3A%20%22IFSC%20Code%22%2C%0A%20%20%20%20%20%20%20%20%22buyer.supplier.ifscCode%22%3A%20%22Bank%20IFSC%22%2C%0A%20%20%20%20%20%20%20%20%22market.totalDiscountOffered%22%3A%20%22Total%20Discount%20Offered%22%2C%0A%20%20%20%20%20%20%20%20%22market.weightedAvgArbitrage%22%3A%20%22Weighted%20Avg.%20Arbitrage%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.fundingType%22%3A%20%22Fund%20Type%22%2C%0A%20%20%20%20%20%20%20%20%22market.selfFund%22%3A%20%22Self%20Fund%22%2C%0A%20%20%20%20%20%20%20%20%22market.bankFund%22%3A%20%22Bank%20Fund%22%2C%0A%20%20%20%20%20%20%20%20%22market.assignTobankFund%22%3A%20%22Assign%20to%20Bank%22%2C%0A%20%20%20%20%20%20%20%20%22market.assignedTobankFund%22%3A%20%22Assigned%20to%20Bank%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.supplierDiscount%22%3A%20%22Supplier%20Discount%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.supplierDiscountPercent%22%3A%20%22Supplier%20Discount%20%25%22%2C%0A%20%20%20%20%20%20%20%20%22invoice.flatSupplierDiscountPercent%22%3A%20%22Flat%20Supplier%20Discount%20%25%22%2C%0A%20%20%20%20%20%20%20%20%22payable.selfFundedInvoicePayments%22%3A%20%22Self%20Funded%20Invoice%20Payments%22%2C%0A%20%20%20%20%20%20%20%20%22payable.bankFundedRePayments%22%3A%20%22Bank%20Funded%20Repayments%22%2C%0A%20%20%20%20%20%20%20%20%22payable.selfFunded%22%3A%20%22Self%20Funded%22%2C%0A%20%20%20%20%20%20%20%20%22payable.bankFunded%22%3A%20%22Bank%20Funded%22%2C%0A%20%20%20%20%20%20%20%20%22payable.totalDuePayments%22%3A%20%22Total%20Due%20Payments%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.invoices.discount%22%3A%20%22Discount%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.invoices.flatDiscount%22%3A%20%22Flat%20Discount%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.invoices.discountAmount%22%3A%20%22Discount%20Amount%22%2C%0A%20%20%20%20%20%20%20%20%22supplier.requests.totalDiscount%22%3A%20%22Total%20Discount%22%2C%0A%20%20%20%20%20%20%20%20%22buyer.performance.DiscountAsInvoiceValue%22%3A%20%22Discount%20as%20%25%20of%20invoice%20value%22%0A%7D%0A; vascopath=MTQ4ZjRiZjEzYjQ2NDNmYw==; JSESSIONID=5B650118E70479E5FA2DD33A17F526CB' \\\r\n  -H 'origin: https://ddrx-automation.credable.in' \\\r\n  -H 'priority: u=1, i' \\\r\n  -H 'referer: https://ddrx-automation.credable.in/' \\\r\n  -H 'sec-ch-ua: \"Not)A;Brand\";v=\"99\", \"Google Chrome\";v=\"127\", \"Chromium\";v=\"127\"' \\\r\n  -H 'sec-ch-ua-mobile: ?0' \\\r\n  -H 'sec-ch-ua-platform: \"Windows\"' \\\r\n  -H 'sec-fetch-dest: empty' \\\r\n  -H 'sec-fetch-mode: cors' \\\r\n  -H 'sec-fetch-site: same-origin' \\\r\n  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36' \\\r\n  -H 'x-aguuid: undefined' \\\r\n  -H 'x-requested-with: XMLHttpRequest' \\\r\n  -H 'x-uuid: 67000e11-90db-48fb-8af9-018d06dab8ba' \\\r\n  --data-raw '{\"bankId\":21,\"bankConfigId\":21,\"bankBuyerConfigDTO\":{\"bankBuyerConfigId\":128,\"bankBuyerConfigStgId\":null,\"status\":\"ACTIVE\",\"col1\":\"34\",\"col2\":\"27\",\"col3\":\"32\",\"col4\":\"34\",\"col5\":\"34\",\"col6\":\"2312\",\"col7\":\"24\",\"col8\":\"15\",\"col9\":\"15\",\"col10\":\"28\",\"pmtInstrType\":\"CSV\",\"applyAdjustmentsOnHairCut\":true,\"bankPmtInstrChannel\":\"SFTP\",\"pmtInstrDateType\":\"CALCULATED_DUE_DATE\",\"pmtInstrAmountType\":\"CALCULATED_PAYMENT_AMOUNT\",\"notifyCorpToAppvPmt\":\"ON_BANK_ACK\",\"accountNumber\":\"2834043211924\",\"linedupAmount\":\"3498765234\",\"paymentFileVendorCodeType\":\"FINANCIER_CODE\",\"paymentFileVersion\":null,\"copyFilesToCorp\":true,\"isDefaultBank\":true,\"canProcessNonFundTxns\":true,\"corpLevelApproval\":true,\"alertEmailPostInstrFileTransfer\":\"EMAIL_TO_INFORM_SFTP_TRANSFER\",\"cifId\":\"54\",\"accountType\":\"\",\"branchCode\":\"43\",\"limitExpiryDate\":\"\",\"coolingPeriodApplicable\":false,\"coolingPeriod\":\"0\",\"coolingPeriodInterestRate\":\"0\",\"blockDiscountingDuringCoolingPeriod\":false,\"chargePenalInterestRateDuringCp\":\"NO\",\"dueDateAdjustmentCalendar\":\"BANK_CALENDAR\",\"dueDateAdjustment\":\"PRE_SHIFT\",\"loanAccountNumber\":\"\",\"discountingType\":\"FRONTEND\",\"programType\":\"BANK\"}}'"
+							},
+							"response": []
+						},
+						{
+							"name": "searchBankBuyerConfig",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"\r",
+											"pm.environment.set('bankBuyerConfigStgId',pm.response.json().bankPrefDetailDTOs[0].bankBuyerConfigStgId);\r",
+											"\r",
+											"pm.test(\"fund all buyers called successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"fund all buyers called successfully\");\r",
+											"});\r",
+											"\r",
+											"var response = pm.response.json();\r",
+											"\r",
+											"if (response.bankPrefDetailDTOs && response.bankPrefDetailDTOs.length > 5) {\r",
+											" \r",
+											"    var requestTypes = response.bankPrefDetailDTOs[5].requestType;\r",
+											"\r",
+											"\r",
+											"    pm.test(\"Request type contains 'EDIT'\", function () {\r",
+											"        pm.expect(requestTypes).to.include('EDIT');\r",
+											"    });\r",
+											"} else {\r",
+											"    \r",
+											"    console.log(\"bankPrefDetailDTOs is not present or doesn't contain at least 6 elements.\");\r",
+											"}\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"linedupAmount\":0,\"bankId\":21,\"searchBuyerName\":\"Regression Buyer16\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/fetchAllBankBuyerConfig",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"fetchAllBankBuyerConfig"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "approveBankEditRequest",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"pm.test(\"Config request approved successfully\", function () {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.description).to.eql(\"Config request approved successfully\");\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{checkerauth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{checkerauth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"requestStatus\":\"APPROVE\",\"bankBuyerConfigStgId\":{{bankBuyerConfigStgId}}}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/approveBankRequestPrefDetail",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"approveBankRequestPrefDetail"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ValidatefetchAllBankBuyerConfig",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"fund all buyers called successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"fund all buyers called successfully\");\r",
+											"});\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});\r",
+											"pm.test(\"Validate Payment Instrument Channel for specific buyerId\", function () {\r",
+											"    let responseJson = pm.response.json();\r",
+											"    let expectedBuyerId = 121;  \r",
+											"    let expectedPaymentChannel = pm.variables.get(\"BuyerbankEdit payment channnel-api-sftp\");\r",
+											"\r",
+											"    let bankPrefDetailDTOs = responseJson.bankPrefDetailDTOs;\r",
+											"\r",
+											"    let matchingRecord = bankPrefDetailDTOs.find(record => record.buyerId === expectedBuyerId);\r",
+											"\r",
+											"    if (matchingRecord) {\r",
+											"        pm.expect(matchingRecord.bankPmtInstrChannel).to.eql(expectedPaymentChannel);\r",
+											"    } else {\r",
+											"        pm.fail(\"No matching record found for buyerId: \" + expectedBuyerId);\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "apikey",
+									"apikey": [
+										{
+											"key": "value",
+											"value": "{{auth}}",
+											"type": "string"
+										},
+										{
+											"key": "key",
+											"value": "X-Uuid",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"linedupAmount\":0,\"bankId\":21,\"searchBuyerName\":\"Regression Buyer16\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/fetchAllBankBuyerConfig",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"fetchAllBankBuyerConfig"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/api/fetchAllBankBuyerConfig",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"fund all buyers called successfully\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"fund all buyers called successfully\");\r",
+											"});\r",
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Successful POST request\", function () {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([200]);\r",
+											"});\r",
+											"pm.test(\"Status value is OK\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+											"});pm.test(\"Response time is less than 10000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-Uuid",
+										"value": "{{auth}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"buyerId\":121,\"bankId\":21}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseurl}}api/fetchAllBankBuyerConfig",
+									"host": [
+										"{{baseurl}}api"
+									],
+									"path": [
+										"fetchAllBankBuyerConfig"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Alert popups present in buyer details",
+					"item": [
+						{
+							"name": "Invalid Liei Number",
+							"item": [
+								{
+									"name": "/api/addBuyerRequest",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Status value is BADREQUEST\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"BADREQUEST\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response body has correct structure\", function () {\r",
+													"    const jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData).to.have.property(\"status\", \"BADREQUEST\");\r",
+													"    pm.expect(jsonData).to.have.property(\"description\", \"Invalid LEI format\");\r",
+													"    pm.expect(jsonData).to.have.property(\"body\", null);\r",
+													"    pm.expect(jsonData).to.have.property(\"messageCode\", \"LEIV002\");\r",
+													"    pm.expect(jsonData).to.have.property(\"message\", \"Invalid LEI format\");\r",
+													"});\r",
+													"pm.test(\"Response time is less than 10000ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "{{auth}}",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "X-Uuid",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-aguuid",
+												"value": "undefined"
+											},
+											{
+												"key": "x-requested-with",
+												"value": "XMLHttpRequest"
+											},
+											{
+												"key": "X-Uuid",
+												"value": "{{auth}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"buyerId\":\"62\",\"addressLine1\":\"Vaishnavi Summit, No 6/B, 7th Main, 80 Feet Road,\",\"addressLine2\":\"\",\"cinNo\":\"93284708374878742\",\"city\":\"Bangalore\",\"imageUrl\":\"\",\"country\":\"India\",\"companyEmail\":\"user@raas.by\",\"panNo\":\"IJAKHJ768E\",\"phone\":\"9999999999\",\"pincode\":\"560034\",\"state\":\"Karnataka\",\"companyName\":\"RAAS Seller\",\"gstinNo\":\"21IJAKHJ768UUJH\",\"buyerRating\":\"1\",\"industryType\":\"3\",\"corpArbitrageRate\":\"100\",\"appVersion\":\"DDRX\",\"bank_name\":\"NA\",\"bank_account\":\"1000000000000\",\"bank_ifsc\":\"ABCD0123456\",\"relationshipManager\":\"Karan\",\"minCreditPeriod\":\"1\",\"maxCreditPeriod\":\"300\",\"buyerCode\":\"RAASUAT\",\"kycRequired\":false,\"screenProgress\":\"DONE\",\"initialSetupWizard\":\"DONE\",\"accountLabel\":\"\",\"district\":\"\",\"coverageGroup\":\"\",\"smeCenterHeadMailId\":\"\",\"fax\":\"\",\"constitution\":\"\",\"leiNo\":\"SA\",\"dateOfIncorporation\":\"16-Jul-2024\",\"smeCenter\":\"\",\"externalCorpId\":\"\",\"tncAppliedFor\":\"NONE\",\"tncVerificationVia\":\"DIGITAL\",\"isBuyerEdit\":true,\"userDetails\":null}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseurl}}api/addBuyerRequest",
+											"host": [
+												"{{baseurl}}api"
+											],
+											"path": [
+												"addBuyerRequest"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Pan /Gstin invalid",
+							"item": [
+								{
+									"name": "/api/addBuyerRequest",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Status value is BADREQUEST\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"BADREQUEST\");\r",
+													"});\r",
+													"pm.test(\"Response body has correct structure\", function () {\r",
+													"    const jsonData = pm.response.json();\r",
+													"\r",
+													"\r",
+													"    pm.expect(jsonData).to.have.property(\"description\", \"GSTIN not associated to PAN\");\r",
+													"    pm.expect(jsonData).to.have.property(\"body\", null);\r",
+													"    pm.expect(jsonData).to.have.property(\"messageCode\", \"GSTPANV001\");\r",
+													"    pm.expect(jsonData).to.have.property(\"message\", \"GSTIN not associated to PAN\");\r",
+													"});\r",
+													"pm.test(\"Response time is less than 10000ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "{{auth}}",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "X-Uuid",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-aguuid",
+												"value": "undefined"
+											},
+											{
+												"key": "x-requested-with",
+												"value": "XMLHttpRequest"
+											},
+											{
+												"key": "X-Uuid",
+												"value": "{{auth}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"buyerId\":\"62\",\"addressLine1\":\"Vaishnavi Summit, No 6/B, 7th Main, 80 Feet Road,\",\"addressLine2\":\"\",\"cinNo\":\"93284708374878742\",\"city\":\"Bangalore\",\"imageUrl\":\"\",\"country\":\"India\",\"companyEmail\":\"user@raas.by\",\"panNo\":\"IJAKHJ768E\",\"phone\":\"9999999999\",\"pincode\":\"560034\",\"state\":\"Karnataka\",\"companyName\":\"RAAS Seller\",\"gstinNo\":\"21IJAKHJ768UUJH\",\"buyerRating\":\"1\",\"industryType\":\"3\",\"corpArbitrageRate\":\"0.001\",\"appVersion\":\"DDRX\",\"bank_name\":\"NA\",\"bank_account\":\"1000000000000\",\"bank_ifsc\":\"ABCD0123456\",\"relationshipManager\":\"Karan\",\"minCreditPeriod\":\"1\",\"maxCreditPeriod\":\"300\",\"buyerCode\":\"RAASUAT\",\"kycRequired\":false,\"screenProgress\":\"DONE\",\"initialSetupWizard\":\"DONE\",\"accountLabel\":\"\",\"district\":\"\",\"coverageGroup\":\"\",\"smeCenterHeadMailId\":\"\",\"fax\":\"\",\"constitution\":\"\",\"leiNo\":\"\",\"dateOfIncorporation\":\"16-Jul-2024\",\"smeCenter\":\"\",\"externalCorpId\":\"\",\"tncAppliedFor\":\"NONE\",\"tncVerificationVia\":\"DIGITAL\",\"isBuyerEdit\":true,\"userDetails\":null}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseurl}}api/addBuyerRequest",
+											"host": [
+												"{{baseurl}}api"
+											],
+											"path": [
+												"addBuyerRequest"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Buyer with same Buyer code already exists",
+							"item": [
+								{
+									"name": "/api/v2/getAllBuyerListMakerAndChecker Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"pm.test(\"OK\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"OK\");\r",
+													"});\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"\r",
+													" \r",
+													"pm.test(\"Response time is less than 100000ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(100000);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "{{auth}}",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "X-Uuid",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-uuid",
+												"value": "{{auth}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"searchBuyerName\":\"{{buyername}}\",\"page\":0,\"size\":10}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseurl}}api/v2/getAllBuyerListMakerAndChecker",
+											"host": [
+												"{{baseurl}}api"
+											],
+											"path": [
+												"v2",
+												"getAllBuyerListMakerAndChecker"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "/api/addBuyerRequest",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"pm.test(\"Buyer with same Buyer code already exists\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Buyer with same Buyer code already exists\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Response status code is 200\", function () {\r",
+													"  pm.response.to.have.status(200);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"pm.test(\"Response has the required fields\", function () {\r",
+													"    const responseData = pm.response.json();\r",
+													"    \r",
+													"    pm.expect(responseData).to.be.an('object');\r",
+													"    pm.expect(responseData.status).to.exist;\r",
+													"    pm.expect(responseData.description).to.exist;\r",
+													"    pm.expect(responseData.messageCode).to.exist;\r",
+													"    pm.expect(responseData.message).to.exist;\r",
+													"});\r",
+													"\r",
+													"\r",
+													"pm.test(\"Response time is less than 100000ms\", function () {\r",
+													"  pm.expect(pm.response.responseTime).to.be.below(100000);\r",
+													"});\r",
+													"\r",
+													"\r",
+													"pm.test(\"Body should be null\", function () {\r",
+													"    const responseData = pm.response.json();\r",
+													"    pm.expect(responseData.body).to.be.null;\r",
+													"});\r",
+													"\r",
+													"\r",
+													"pm.test(\"Content-Type header is application/json\", function () {\r",
+													"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+													"});\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"function generateRandomString(length) {\r",
+													"    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\r",
+													"    var result = '';\r",
+													"    var charactersLength = characters.length; \r",
+													"    for (var i = 0; i < length; i++) {\r",
+													"        result += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+													"    }\r",
+													"    return result;\r",
+													"}\r",
+													"function generateCapitalString(length) {\r",
+													"    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+													"    var capitalletter = '';\r",
+													"    var charactersLength = characters.length; \r",
+													"    for (var i = 0; i < length; i++) {\r",
+													"        capitalletter += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+													"    }\r",
+													"    return capitalletter;\r",
+													"}\r",
+													"\r",
+													"function generateRandomno(length) {\r",
+													"    var characters = '0123456789';\r",
+													"    var nos = '';\r",
+													"    var charactersLength = characters.length; \r",
+													"    for (var i = 0; i < length; i++) {\r",
+													"        nos += characters.charAt(Math.floor(Math.random() * charactersLength));\r",
+													"    }\r",
+													"    return nos;\r",
+													"}\r",
+													"\r",
+													"\r",
+													"var num = 1;\r",
+													"\r",
+													"\r",
+													"    var email = generateRandomString(5);\r",
+													"    var useremail = email + \"@yopmail.com\";\r",
+													"    console.log(useremail);\r",
+													"     pm.environment.set('buyeruseremailid', useremail); \r",
+													"\r",
+													"    \r",
+													"    var togenerateusername = generateRandomString(6);\r",
+													"    var username = togenerateusername + (1+num++);\r",
+													"    console.log(username);\r",
+													"     pm.environment.set('Buyercodebuyername', username); \r",
+													"\r",
+													"     \r",
+													"  \r",
+													"\r",
+													"    \r",
+													"    var newbuyername = generateRandomString(7) + (3+num++);\r",
+													"    console.log(newbuyername);\r",
+													"    pm.environment.set('NEWbuyernamebuyerbuyercode', newbuyername); \r",
+													"\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "{{auth}}",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "X-Uuid",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "accept",
+												"value": "application/json, text/javascript, */*; q=0.01"
+											},
+											{
+												"key": "accept-language",
+												"value": "en-US,en;q=0.9"
+											},
+											{
+												"key": "content-type",
+												"value": "application/json"
+											},
+											{
+												"key": "x-requested-with",
+												"value": "XMLHttpRequest"
+											},
+											{
+												"key": "X-Uuid",
+												"value": "{{auth}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"buyerId\":\"107\",\"addressLine1\":\"Shvbv\",\"addressLine2\":\"\",\"cinNo\":\"L17110MH1973PLC019786\",\"city\":\"Mumbai\",\"imageUrl\":\"\",\"country\":\"Ascension Island\",\"companyEmail\":\"shiv@api.com\",\"panNo\":\"AEFPI9158M\",\"phone\":\"9876543210\",\"pincode\":\"441202\",\"state\":\"Maharashtra\",\"companyName\":\"{{Buyercodebuyername}}\",\"gstinNo\":\"22AEFPI9158M1z5\",\"buyerRating\":\"2\",\"industryType\":\"2\",\"corpArbitrageRate\":\"100\",\"appVersion\":\"DD\",\"bank_name\":\"Equentia\",\"bank_account\":\"191929191892\",\"bank_ifsc\":\"SBIN0013528\",\"relationshipManager\":\"Arun\",\"minCreditPeriod\":\"1\",\"maxCreditPeriod\":\"120\",\"buyerCode\":\"TOU1\",\"kycRequired\":false,\"screenProgress\":\"DONE\",\"initialSetupWizard\":\"DONE\",\"accountLabel\":\"\",\"district\":\"\",\"coverageGroup\":\"\",\"smeCenterHeadMailId\":\"\",\"fax\":\"\",\"constitution\":\"\",\"leiNo\":\"315700N4TLZCMSF1PG82\",\"dateOfIncorporation\":\"01-Nov-2013\",\"smeCenter\":\"\",\"externalCorpId\":\"\",\"tncAppliedFor\":\"NONE\",\"tncVerificationVia\":\"DIGITAL\",\"isBuyerEdit\":true,\"userDetails\":[{\"roleIds\":[31],\"userLevel\":\"USER\",\"emailId\":\"{{buyeruseremailid}}\",\"firstName\":\"qow\",\"lastName\":\"ier\",\"userName\":\"maya\",\"phoneNumber\":\"9876543210\",\"externalUserId\":\"\",\"id\":1,\"roles\":[{\"roleId\":\"31\",\"roleDescription\":\"Buyer\"}]}]}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseurl}}api/addBuyerRequest",
+											"host": [
+												"{{baseurl}}api"
+											],
+											"path": [
+												"addBuyerRequest"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Username already exists",
+							"item": [
+								{
+									"name": "/api/addBuyerRequest",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var response = pm.response.json();\r",
+													"\r",
+													"pm.test(\"Status is BADREQUEST\", function () {\r",
+													"    pm.expect(response.status).to.eql(\"BADREQUEST\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Description is 'Username already exist'\", function () {\r",
+													"    pm.expect(response.description).to.eql(\"Username already exist\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message code is 'USEREXIST001'\", function () {\r",
+													"    pm.expect(response.messageCode).to.eql(\"USEREXIST001\");\r",
+													"});\r",
+													"\r",
+													"pm.test(\"Message is 'Username already exist'\", function () {\r",
+													"    pm.expect(response.message).to.eql(\"Username already exist\");\r",
+													"});\r",
+													"pm.test(\"Response time is less than 10000ms\", function () {\r",
+													"    pm.expect(pm.response.responseTime).to.be.below(10000);\r",
+													"});"
+												],
+												"type": "text/javascript",
+												"packages": {}
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "apikey",
+											"apikey": [
+												{
+													"key": "value",
+													"value": "{{auth}}",
+													"type": "string"
+												},
+												{
+													"key": "key",
+													"value": "X-Uuid",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "X-Uuid",
+												"value": "{{auth}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"buyerId\":\"139\",\"isBuyerEdit\":false,\"userDetails\":[{\"roleIds\":[31],\"userLevel\":\"USER\",\"emailId\":\"asd@yopmail.com\",\"firstName\":\"MAY\",\"lastName\":\"11\",\"userName\":\"asd@yopmail.com\",\"phoneNumber\":\"8131415594\",\"externalUserId\":\"asd@yopmail.com\",\"id\":3,\"roles\":[{\"roleId\":\"31\",\"roleDescription\":\"Buyer\"}]}]}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseurl}}api/addBuyerRequest",
+											"host": [
+												"{{baseurl}}api"
+											],
+											"path": [
+												"addBuyerRequest"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{auth}}",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "X-Uuid",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
